@@ -2,6 +2,9 @@
 
 Proyecto colaborativo que realicé con dos colegas universitarios: un completo Sistema de Citas Veterinarias desarrollado utilizando el framework Ruby on Rails. Esta aplicación web sirve como una plataforma fácil de usar que facilita diversas funcionalidades dentro del ámbito veterinario.
 
+Para acceder a una documentación más detallada sobre el funcionamiento, métodos de desarrollo y operatividad del sistema, te invitamos a visitar el siguiente enlace:
+https://iacobuccib.github.io/
+
 ### Pasos para ejecutar la aplicación
 
 1. Instalación de Ruby y Rails  
