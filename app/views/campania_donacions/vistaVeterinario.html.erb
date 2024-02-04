@@ -1,0 +1,73 @@
+<!-- vista de todas las campañas del veterinario que creo
+contiene un boton para crear una nueva campaña
+
+-->
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; justify-content: center; margin-top: 6%;">
+    <i class="material-icons medium left grey" style="margin-right: 10px;">campaign</i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Campañas de donación</h2>
+  </div>
+<% end %>
+
+<% content_for :titulo_acciones do %>
+  <a class="btn btn-primary anchor-new-celeste" href="/nueva_campania"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center; margin-top: 20%;">
+    Nueva Campaña
+    <i class="material-icons" style="margin-left:15px;">add</i>
+    <i class="material-icons" style="margin-left:15px;">campaign</i>
+  </a>
+  <br>
+      <%# <%= link_to 'Nueva Campaña', nueva_campania_path, class: 'btn btn-primary'%>
+<% end %>
+
+<% content_for :body do %>
+
+    <div class="card" style="border-radius:0;">
+      <div class="card-content">
+        <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Monto Actual</th>
+              <th>Monto Objetivo</th>
+              <th>Fecha Final</th>
+              <th>Editar</th> 
+            </tr>
+          </thead>
+          <tbody>
+            <% @campanias.each do |campania| %>
+              <tr>
+                <td><%= campania.nombre %></td>
+                <td><%= campania.descripcion %></td>
+                <td><%= number_to_currency(campania.monto_actual, unit: '$', separator: ',', delimiter: '.') if campania.monto_actual.present? %></td>
+                <td><%= number_to_currency(campania.monto_objetivo, unit: '$', separator: ',', delimiter: '.') if campania.monto_objetivo.present? %></td>
+                <td><%= campania.fecha_final.strftime('%d-%m-%Y %H:%M') %></td>
+                <td>
+                  <%= link_to editar_campania_path(campania) do %>
+                     <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar Campaña">edit</i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br>
+    <a class="btn btn-primary btn-volver" href="/homeVeterinario"
+      style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+      Volver
+      <i class="material-icons" style="margin-left:15px;">undo</i>
+    </a>
+
+    <script>
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      });
+    </script>
+
+<% end %>
+

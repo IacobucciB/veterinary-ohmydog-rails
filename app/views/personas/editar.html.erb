@@ -1,0 +1,104 @@
+<!--
+  Esta vista la tiene solamente el Usuario
+  Sirve para editar el perfil de usuario, los datos basicos
+-->
+
+
+
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; margin-top: 70px; margin-left: 20px;">
+    <i class="material-icons small left grey" style="margin-right: 10px;">edit</i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Editar Perfil</h2>
+  </div>
+<% end %> 
+
+<% content_for :body do %>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="card" style="border-radius: 0;">
+          <div class="card-content">
+            <%= form_for @persona, url: actualizar_mi_perfil_path(@persona), method: :patch do |f| %>
+              <br>
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field" style="margin-right: 30px;">
+                  <%= f.label :nombre %>
+                  <%= f.text_field :nombre, class: 'form-control', size: '35' %>
+                  <% if @persona && @persona.errors.has_key?(:nombre) %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <% @persona.errors[:nombre].each do |error_message| %>
+                        <%= error_message %><br>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+                
+                <div class="field">
+                  <%= f.label :apellido %>
+                  <%= f.text_field :apellido, class: 'form-control', size: '35' %>
+                  <% if @persona && @persona.errors.has_key?(:apellido) %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <% @persona.errors[:apellido].each do |error_message| %>
+                        <%= error_message %><br>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center" style="margin-top: 30px;">
+                <div class="field" style="margin-right: 30px;">
+                  <%= f.label :dni %>
+                  <%= f.number_field :dni, class: 'form-control', size: '35' %>
+                  <% @persona.errors.full_messages_for(:dni).each do |error_message| %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <%= error_message %><br>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="field">
+                  <%= f.label :telefono %>
+                  <%= f.number_field :telefono, id: 'telefono_field', class: 'form-control', size: '50', style: 'width: 363px;' %>
+                  <% if @persona && @persona.errors.has_key?(:telefono) %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <% @persona.errors[:telefono].each do |error_message| %>
+                        <%= error_message %><br>
+                      <% end %>
+                    </div>      
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center" style="margin-top: 30px;">
+                <div class="field" style="margin-right: 30px; ">
+                  <%= f.label :nacimiento %>
+                  <%= f.date_field :nacimiento, id: 'nacimiento_field', class: 'form-control', style: 'width: 360px; margin-left: 30px;' %>
+                  <% if @persona && @persona.errors.has_key?(:nacimiento) %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <% @persona.errors[:nacimiento].each do |error_message| %>
+                        <%= error_message %><br>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+                  <%= f.hidden_field :donante, value: @persona.donante %>
+                  <%= f.hidden_field :user_id, value: @persona.user_id %>
+                  <%= f.hidden_field :id, value: @persona.id %>
+
+              <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                <div class="actions">
+                  <%= f.submit 'Guardar', class: 'btn btn-primary', style: 'background-color: rgb(252, 145, 14); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to 'Volver', show_my_data_path(@persona), class: 'btn btn-secondary', style: 'background-color: rgb(252, 145, 14); border: none; border-radius: 2px; width: 10%; letter-spacing: .5px; vertical-align: center; display: flex; align-items: center; justify-content: center' %>
+<% end %>

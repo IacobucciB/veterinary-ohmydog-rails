@@ -1,0 +1,64 @@
+<!-- app/views/tu_controlador/edit.html.erb -->
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
+    <i class="material-icons medium left grey" style="margin-right: 10px;">map</i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Editar datos del 
+      <% if @paseador.service_type == 'paseador' %> 
+        Paseador
+      <% else %>
+        Cuidador
+      <% end %>
+    </h2>
+  </div>
+<% end %>
+
+<% content_for :body do %>
+  <div class="container">
+    <div class="row justify-content-left">
+      <div class="col-md-9">
+        <div class="card" style="border-radius:0; margin-left:10%;">
+          <div class="card-content">
+            <%= form_for @paseador, url: { action: "update", id: @paseador.id }, method: :patch do |f| %>
+              <div class="d-flex">
+                <div class="field" style="margin-left:20%;">
+                  <%= f.text_field :name, class: "form-control", placeholder: "Nombre Completo", style: "width:120%;", required: true %>
+                </div>
+              </div>
+
+              <div class="d-flex">
+                <div class="field" style="margin-left:20%; margin-top:4%;" >
+                  <%= f.text_field :email, class: "form-control", placeholder: "Correo electrónico", style: "width:120%", required: true %>
+                </div>
+              </div>
+
+              <div class="d-flex">
+                <div class="field" style="margin-left:20%; margin-top:4%;" >
+                  <% if @paseador.service_type == 'paseador' %>
+                    <!-- Campos específicos para el tipo 'paseador' -->
+                    <%= f.collection_select :plaza_id, Plaza.all, :id, :nombre, { prompt: "Seleccione una plaza" }, class: "form-control", style: "width:130%;" %>
+                  <% elsif @paseador.service_type == 'cuidador' %>
+                    <!-- Campos específicos para el tipo 'cuidador' -->
+                    <%= f.text_field :location, class: "form-control", placeholder: "Ubicación", style: "width:120%", required: true %>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                <div class="actions">
+                  <%= f.submit "Actualizar Datos"  , class: 'btn btn-primary', style: 'background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;'%>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="btn btn-primary btn-volver" href="/ver_paseadores_veterinario"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+<% end %>

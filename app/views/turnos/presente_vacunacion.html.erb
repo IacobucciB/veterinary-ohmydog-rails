@@ -1,0 +1,75 @@
+<% content_for :titulo do %>
+  <br>
+  <div style="display: flex; align-items: center; margin-top: 40px; margin-left: 1%;">
+    <i class="material-icons small left celeste" style="margin-right: 10px;">event_available</i>
+    <h2 style="margin-top: 4px; font-weight: 200; margin-right: 10px;">
+      Actualizacion de la Historia Clínica de <%= @turno.perro.nombre %> 
+    </h2>  
+  </div>
+   <blockquote class="blockquote">
+      <h6>Turno de tipo: <%= @turno.tipo_turno.nombre %> - 
+      <%= @turno.dia.strftime("%d/%m/%Y") %>
+      </h6>
+  </blockquote>
+<% end %>
+
+<% content_for :body do %>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card" style="border-radius:0;">
+          <div class="card-content">
+            <%= form_for @turno do |f| %>
+              
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="form-group" style="margin-right:10%;">
+                  <%= f.label :dia, 'Fecha: ' %>
+                  <%= f.date_field :dia, value: @turno.dia, readonly: true, class: 'form-control' %>
+                </div>
+
+                <div class="form-group" style="margin-right:30px;">
+                  <%= f.label :tipo_turno_id, 'Tipo de Turno' %>
+                  <%= f.text_field :tipo_turno_id, value: @turno.tipo_turno.nombre, readonly: true, class: 'form-control' %>
+                  <%= f.hidden_field :tipo_turno_id, value: @turno.tipo_turno.id %>
+                </div>
+              </div>
+              <br>
+            
+              <div class="field" style="margin-left:20%;">
+                <%= f.label :descripcion, 'Anotaciones del turno' %>
+                <%= f.text_area :descripcion, class: 'form-control', rows: 5, style: 'max-width: 80%;' %>
+              </div>
+              <br>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field">
+                  <%= f.label :peso, 'Peso (en kg)' %>
+                  <%= f.number_field :peso, class: 'form-control', required: true %>
+                </div>
+
+                <div class="field" style="margin-left:5%;">
+                  <% donante_text = @turno.perro.persona.donante ? 'Precio: (¡Es donante, tendrá descuento!)' : 'Precio: (No es donante)' %>
+                  <%= f.label :monto, donante_text %>
+                  <%= f.number_field :monto, class: 'form-control', required: true %>
+                </div>
+
+              </div>
+
+              <br><br>
+              <div class="d-flex justify-content-center align-items-center" style="min-height: 10%;">
+                <%= f.submit 'Continuar', class: 'btn btn-primary', style: 'background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 15%; height: 35px; letter-spacing: 0.5px; color: white;'%>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="btn btn-primary btn-volver" href="/turnosAll"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+<% end %>

@@ -1,0 +1,111 @@
+<!--
+  Esta vista la tiene el veterinario
+  Es el formulario para crear un perro
+-->
+
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; margin-top:40px;" >
+    <i class="material-icons medium left grey" style="margin-right: 10px;">person</i>
+    <h2 style="margin-top: 4px; font-weight: 200;"> Añadir un perro para <%= @perro.persona.nombre %> <%= @perro.persona.apellido %></h2>
+  </div>
+<% end %> 
+
+<% content_for :body do %>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card" style="border-radius:0;">
+          <div class="card-content">
+            <%= form_for(@perro, html: { multipart: true }) do |f| %>
+              <br>
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field" style="margin-right:30px;">
+                  <%= f.text_field :nombre, placeholder: 'Nombre', class: 'form-control', size: '30' %>
+                  <% if @perro.errors[:nombre].any? %>
+                    <div class="alert alert-danger">
+                      <%= @perro.errors.full_messages_for(:nombre).join('. ') %>
+                    </div>
+                  <% end %>
+                </div>
+                <br><br>
+
+                <div class="field">
+                  <%= f.text_field :color, placeholder: 'Color', class: 'form-control', size: '35' %>
+                </div>
+                <% if @perro.errors[:color].any? %>
+                    <div class="alert alert-danger">
+                      <%= @perro.errors.full_messages_for(:color).join('. ') %>
+                    </div>
+                  <% end %>
+              </div>
+
+              <br><br>
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field" style="margin-right:30px;">
+                  <%= f.number_field :edad, placeholder: 'Edad aproximada (en meses)', class: 'form-control', size: '30', style: 'width:320px;' %>
+                </div>
+                <% if @perro.errors[:edad].any? %>
+                    <div class="alert alert-danger">
+                      <%= @perro.errors.full_messages_for(:edad).join('. ') %>
+                    </div>
+                <% end %>
+
+                <br>
+                <div class="field">
+                  <%= f.text_area :descripcion, placeholder: 'Descripcion', class: 'form-control', size: '35' %>
+                </div>
+              </div>
+
+              <br><br>
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field" style="margin-right:30px;">
+                  <%= f.text_area :antecedentes, placeholder: 'Antecedentes', class: 'form-control', size: '35' %>
+                </div>
+
+                <div class="field">
+                  <%= f.file_field :foto %>
+                </div>
+                <% if @perro.errors[:foto].present? %>
+                  <div class="alert alert-danger">
+                    <%= @perro.errors.full_messages_for(:foto).join('. ') %>
+                  </div>
+                <% end %>
+              </div>
+              <%# <%= f.hidden_field :foto %> 
+
+              <br>
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field" style="margin-right:30px;">
+                  <%= f.collection_select :tipo_raza_id, TipoRaza.all, :id, :nombre, prompt: "Seleccione Raza" %> 
+                </div>
+
+                <div class="field">
+                  <%= f.label :sexo %>
+                  <%= f.collection_select(:sexo, Perro.sexos.keys, :to_s, :humanize, prompt: "Seleccione") %>
+                </div>
+              </div>
+
+              <%= f.hidden_field :persona_id, value: @perro.persona_id %>
+              
+
+              <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                <div class="actions">
+                  <%= f.submit 'Agregar Perro', class: 'btn btn-primary', style: 'background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;' %>
+                </div>
+              </div>
+              
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="btn btn-primary btn-volver" href="/personas"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+  
+<% end %>

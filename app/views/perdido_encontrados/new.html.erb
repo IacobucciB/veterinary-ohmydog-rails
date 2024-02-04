@@ -1,0 +1,76 @@
+<!-- Vista para la creacion de perros perdidos o encontrados-->
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
+    <i class="material-icons medium left grey" style="margin-right: 10px;">campaign</i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Perdido</h2>
+</div>
+<% end %>
+
+<% content_for :body do %>
+
+  <div class="container">
+    <div class="row justify-content-left">
+      <div class="col-md-7">
+        <div class="card" style="border-radius:0; margin-left:10%;">
+          <div class="card-content">
+            <%# <%= form_for(@paseador, url: create_paseador_path, method: :post) do |f| %>
+            <%= form_with(model: @perdido_encontrado, local: true) do |form| %>
+              <% if @perdido_encontrado.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@perdido_encontrado.errors.count, "error") %> prohibieron que este perdido encontrado sea guardado:</h2>
+
+                  <ul>
+                    <% @perdido_encontrado.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="d-flex">
+                <div class="field" style="margin-left:20%;" >
+                  <%= form.collection_select(:perro_id, current_user.persona.perros.where(is_lost: false), :id, :nombre, prompt: 'Seleccione un perro') %>
+                </div>
+              </div>
+
+              <%= form.hidden_field :tipo, value: :Perdido %>
+
+              <div class="d-flex">
+                <div class="field" style="margin-left:20%; margin-top:4%;" >
+                  <%= form.text_field :zona, class: "form-control", placeholder: "Zona en la que se perdio", style: "width:120%;", required: true %>
+                </div>
+              </div>
+
+              <div class="d-flex">
+                <div class="field" style="margin-left:20%; margin-top:4%;" >
+                  <%= form.date_field :dia, required: true, style: 'width:170%;' %>
+                </div>
+              </div>
+
+              <div class="d-flex">
+                <div class="field" style="margin-left:20%; margin-top:4%;" >
+                  <%= form.text_area :observacion, class: "form-control", placeholder: "Alguna observacion que facilite el hallazgo del perro", style: "width:120%;", required: true %>
+                </div>
+              </div>
+
+              <%= form.hidden_field :estado, value: 'Busqueda' %>
+
+               <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                <div class="actions">
+                  <%= form.submit "Publicar Perdido"  , class: 'btn btn-primary', style: 'background-color: rgb(252, 145, 14); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;'%>
+                </div>
+              </div>
+            <% end %> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="btn btn-primary btn-volver" href="/perdido_encontrado_usuario"
+    style="background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+<% end %>

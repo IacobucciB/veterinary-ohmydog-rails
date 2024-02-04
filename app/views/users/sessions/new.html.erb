@@ -1,0 +1,61 @@
+<% content_for :body do %>
+
+  <br><br><br><br>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name))do |f| %>
+                <div class="row">
+                  <div class="col s12 center">
+                    <img src="<%= asset_path('logoDerechaSinFondo.png') %>" alt="Imagen" style="max-width: 200px; height: auto;" class="center d-inline-block align-text-top">
+                  </div>  
+                </div>
+                <br>
+
+                <br>
+                <div class="row center">
+                  <div class="field">
+                    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Correo Electrónico", class: "input-mediano" %>
+                  </div>
+                </div>
+      
+                <br>
+                <div class="row center">
+                  <div class="field">
+                    <%= f.password_field :password, autocomplete: "current-password", placeholder: "Contraseña", class: "input-mediano" %>
+                  </div>
+                
+                  <% if devise_mapping.rememberable? %>
+                    <div class="field">
+                      <%= f.check_box :remember_me %>
+                      <%= f.label :Recordarme %>
+                    </div>
+                  <% end %>
+                </div>
+                <br>
+
+                <div class="row center">
+                  <div class="actions">
+                    <%= f.submit "Iniciar Sesión", class: "boton-sesion" %>
+                  </div>
+                </div>
+                <br>
+                
+                <%# <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+                <%#  <%= link_to "Registrarse", new_registration_path(resource_name) %>
+                <%#<% end %> 
+                <%#- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+                  <%# <%= link_to "Olvidaste tu contraseña?", new_password_path(resource_name) <br /> %>
+                <%# <% end %> 
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+          
+<% end %>

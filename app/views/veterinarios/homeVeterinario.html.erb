@@ -1,0 +1,27 @@
+<!--
+  Es la vista del Escritorio del veterinario
+-->
+<% content_for :body do %>
+<br>
+    <%= link_to 'Turnos para el día de hoy', turnos_del_dia_path, class: 'btn btn-primary anchor-new-celeste', style: "background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:40%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center;"%>
+  
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="card" style="margin-top:70px; border-radius: 0; position: relative; min-height: 100px;">
+            <div class="card-content" style="position: relative; margin-bottom: 0;">
+                <h4 class="mt-3">Bienvenidos al sistema de Gestión de la Veterinaria <strong>¡Oh My Dog!</strong></h4>
+                <br>
+                <h6> A la izquierda, podés encontrar las distintas opciones y funcionalidades que tenés como     
+                    <br>administrador para organizarte.
+                </h6>
+                <br><br>
+                <img src="<%= asset_path('perritoAnteojos.png') %>" alt="Imagen" style="position: absolute; top: 40px; right: 0px; max-width: 20%; height: auto;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+
+<% end %>

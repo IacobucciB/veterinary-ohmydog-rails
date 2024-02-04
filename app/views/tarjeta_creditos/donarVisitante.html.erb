@@ -1,0 +1,55 @@
+  <!-- 
+    Vista para el visitante para ingresar la tarjeta de credito
+    la compara con una que hay ya guardada y se añade el monto para donar
+-->
+
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
+    <i class="material-icons medium left grey" style="margin-right: 10px;"> credit_card </i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Datos de la tarjeta</h2>
+</div>
+<% end %>
+
+<% content_for :body do %>
+  
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card" style="border-radius: 0;">
+          <div class="card-content">
+            <%= form_with(url: "/procesar_visitante", method: "post", local: true) do |form| %>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <%= form.text_field :nombre, value: params[:nombre], placeholder: 'Nombre Completo como figura en la tarjeta', class: 'form-control', style: 'width: 40%;', required: true %>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center" style="margin-top: 3%">
+                <%= form.text_field :numero, value: params[:numero], placeholder: 'Número', class: 'form-control', style: 'width: 40%;', required: true %>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center" style="margin-top: 3%">
+                <%= form.date_field :fecha_vencimiento, value: params[:fecha_vencimiento], placeholder: 'Fecha de vencimiento', class: 'form-control', style: 'width:30%;', required: true %>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center" style="margin-top: 3%">
+                <%= form.text_field :codigo_seguridad, value: params[:codigo_seguridad], placeholder: 'Código de seguridad', class: 'form-control', style: 'width:30%;', required: true %>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center" style="margin-top: 3%">
+                <%= form.number_field :monto, value: params[:monto], placeholder: 'Monto a donar', class: 'form-control', style: 'width:30%;', required: true %>
+              </div>
+
+              <%= form.hidden_field :campania_id, value: params[:id] %>
+
+              <div class="d-flex justify-content-center align-items-center" style="margin-top: 3%">
+                <%= form.submit "Realizar Donación", class: 'btn btn-primary', style: 'background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;' %>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>

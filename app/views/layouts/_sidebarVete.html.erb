@@ -1,0 +1,38 @@
+<!--
+  Esta es la vista de la sidebar que tiene el Veterinario
+-->
+
+
+<nav id="sidebar" class="d-print-none">
+    
+    <li class="list-unstyled components">
+    <a href="/homeVeterinario" class="list-unstyled components">
+        <i class="material-icons ">dashboard</i>Escritorio
+    </a>
+    <hr class="my-4">
+        <a href="<%= '/personas' %>" class="list-unstyled components">
+        <i class="material-icons">list</i>Clientes
+        </a>
+    <hr class="my-4">
+        <a href="<%= '/perros' %>" class="list-unstyled components">
+        <i class="material-icons ">pets</i>Perros
+        </a>
+    <hr class="my-4">
+        <a href="<%= '/turnos' %>" class="list-unstyled components">
+        <i class="material-icons ">pending_actions</i>Turnos Pendientes
+        </a>
+    <hr class="my-4">
+        <a href="<%= '/turnosAll' %>" class="list-unstyled components">
+        <i class="material-icons ">today</i>Todos los Turnos
+        </a>
+    <hr class="my-4">
+        <a href="<%= index_paseador_veterinario_path %>" class="list-unstyled components">
+        <i class="material-icons ">map</i>Paseadores
+        </a>
+    <hr class="my-4">
+        <a href="<%= '/vista_veterinario' %>" class="list-unstyled components">
+        <i class="material-icons ">payments</i>Donaciones
+        </a>
+    <hr class="my-4">
+    </li>
+</nav>

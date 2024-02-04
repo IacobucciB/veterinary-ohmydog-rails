@@ -1,0 +1,106 @@
+<!-- esta vista es para los usuarios Veterinarios pueden ver los paseadores y cuidadores creados
+contiene boton de volver
+-->
+
+
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
+    <i class="material-icons medium left grey" style="margin-right: 10px;">map</i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Paseadores y Cuidadores</h2>
+  </div>
+<% end %>
+
+<% content_for :titulo_acciones do %>
+  <a class="btn btn-primary anchor-new-celeste" href="/newPaseador"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center; margin-top: 17%;">
+    Agregar Paseador
+    <i class="material-icons" style="margin-left:15px;">add</i>
+    <i class="material-icons" style="margin-left:15px;">map</i>
+  </a>
+  <a class="btn btn-primary anchor-new-celeste" href="/newCuidador"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center; margin-top: 5%;">
+    Agregar Cuidador
+    <i class="material-icons" style="margin-left:15px;">add</i>
+    <i class="material-icons" style="margin-left:15px;">house</i>
+  </a>
+  <br>
+<% end %>
+
+<% content_for :body do %>
+  <div class="row">
+  <div class="row mb-10">
+    <div class="col-md-12">
+      <%= form_tag(index_paseador_veterinario_path, method: "get", class: "mb-2") do %>
+        <div class="row">
+          <div class="col-md-3">
+            <%= select_tag :filter, options_for_select(Paseador.service_types.keys.map { |k| [k.humanize, k] }, params[:filter]), class: "form-control", include_blank: "Seleccione Tipo de Servicio" %>
+          </div>
+          <div class="col-md-3">
+            <%= select_tag :plaza_filter, options_for_select(Plaza.pluck(:nombre, :id), params[:plaza_filter]), class: "form-control", include_blank: "Seleccione Plaza" %>
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary" style="background-color: rgb(28, 150, 174); border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center; display: flex; align-items: center; justify-content: center;">
+              <i class="material-icons" style="margin-right: 5px;">search</i>
+              Buscar
+            </button>
+          </div>
+          <div class="col-md-2">
+            <a class="btn btn-primary btn-volver" href="/ver_paseadores_veterinario" style="margin-top:0%; background-color: rgb(252, 145, 14); border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center; display: flex; align-items: center; justify-content: center;">
+              <i class="material-icons" style="margin-right: 5px;">close</i>
+              Limpiar
+            </a> 
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <% if @paseadors.any? %>
+    <% @paseadors.each do |paseador| %>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= paseador.name.capitalize %>
+            </h5>
+            
+            <p class="card-text"><strong> <%= paseador.service_type.capitalize %> </strong></p>
+
+            <p class="card-text"><strong>Email:</strong> <%= paseador.email %></p>
+            
+            <% if paseador.location.present? %>
+              <p class="card-text"><strong>Ubicación:</strong> <%= paseador.location %></p>
+            <% end %>
+
+            <% if paseador.plaza_id.present? %>
+              <% plaza = Plaza.find_by(id: paseador.plaza_id) %>
+              <% if plaza.present? %>
+                <p class="card-text"><strong>Plaza:</strong> <%= plaza.nombre %></p>
+              <% end %>
+            <% end %>
+
+            <%= link_to 'Editar', paseadors_editar_path(paseador), class: 'btn btn-primary' %>
+
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <% else %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card" style="border-radius: 0; position: relative; min-height: 100px;">
+            <div class="card-content" style="position: relative; margin-bottom: 0;">
+              <h4 class="mt-3">No hay servicios.</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <br>
+
+
+<%= link_to 'Volver', root_path, class: 'btn btn-primary btn-volver', style:'background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center' %>
+
+<% end %>

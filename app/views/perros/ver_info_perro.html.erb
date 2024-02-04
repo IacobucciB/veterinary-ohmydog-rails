@@ -1,0 +1,78 @@
+<!--
+  Esta vista la tiene el veterinario
+  Es la parte permite ver el perfil del perro que se busque
+-->
+
+
+<% content_for :body do %>
+
+<% if @perro.present? %>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="card" style="border-radius: 0; position: relative; margin-top:60px;">
+          <div class="card-content">
+            <div class="row">
+              <div class="col-md-3 text-center mt-3">
+                <%# <img src="/assets/user.png" alt="Imagen de usuario" class="img-fluid rounded-circle" style="max-width: 100px; margin-top: 10px;"> %>
+                  <% if @perro.foto.attached? %>
+                    <%# <%= link_to image_tag(perro.foto, class: "img-thumbnail"), perro.foto, data: { lightbox: "perros" } %> 
+                    <%= image_tag(perro.foto, class: "img-thumbnail", style: "width:45%; height: 45%;") %>
+                  <% else %>
+                    <%= image_tag("perroPorDefecto.png", class: "img-thumbnail", style: "width: 75%; height: 45%;") %>
+                  <% end %>
+                </div>
+              <div class="col-md-6">
+                <h5 style="font-size:1.30rem; line-height: 110%; margin: .82rem 0 .656rem 0; color: #333"> 
+                <%= @perro.nombre %> 
+                </h5>
+                <hr class="my-4">
+                <div class="profile-details">
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">timer</i>
+                    <strong>Edad del perro (meses):</strong> <%= @perro.edad %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">timer</i>
+                    <strong>Sexo:</strong> <%= @perro.sexo %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">palette</i>
+                     <strong>Color del perro:</strong> <%= @perro.color %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">person</i>
+                   <strong>Dueño:</strong> <%= @perro.persona.nombre %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">pets</i>
+                    <strong>Raza:</strong> <%= @perro.tipo_raza.nombre %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">description</i>
+                    <strong>Descripcion:</strong> <%= @perro.descripcion %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">description</i>
+                    <strong>Antecedentes:</strong> <%= @perro.antecedentes %>
+                  </div>         
+                </div>
+              </div>
+              <div class="col-md-3">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% end %>
+
+<a class="btn btn-primary btn-volver" href="/perros"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+<% end %>

@@ -1,0 +1,255 @@
+<!--
+  Esta es una vista del veterinario
+  Se ve la lista de usuarios registrados 
+  hay 3 botones por persona: 
+  Que son agregar perro
+  Ver los perros registrados por persona
+  Agrege boton de ver informacion personal del cliente
+-->
+
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; margin-top:6%;">
+    <i class="material-icons medium left grey" style="margin-right: 10px;">person</i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Clientes Registrados</h2>
+  </div>
+<% end %> 
+
+<% content_for :titulo_acciones do %>
+  <a class="btn btn-primary anchor-new-celeste" href="/registrarCliente"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center; margin-top: 20%;">
+    Registrar Usuario
+    <i class="material-icons" style="margin-left:15px;">add</i>
+    <i class="material-icons" style="margin-left:15px;">person_add</i>
+  </a>
+  <br>
+<% end %>
+
+<% content_for :body do %>
+  <div class="row mb-10">
+    <div class="col-md-12">
+      <%= form_with(url: turnos_todos_path, method: "get", class: "mb-2") do %>
+        <div class="row">
+          <div class="col-md-4">
+            <%= text_field_tag(:nombre_apellido, params[:nombre_apellido], class: "form-control", placeholder: "Nombre o apellido", size: '20') %>
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary" style="background-color: rgb(28, 150, 174); border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center; display: flex; align-items: center; justify-content: center;">
+              <i class="material-icons" style="margin-right: 5px;">search</i>
+              Buscar
+            </button>
+          </div>
+          <div class="col-md-2">
+            <a class="btn btn-primary btn-volver" href="/personas" style="margin-top:0%; background-color: rgb(252, 145, 14); border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center; display: flex; align-items: center; justify-content: center;">
+              <i class="material-icons" style="margin-right: 5px;">close</i>
+              Limpiar
+            </a> 
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @personas.any? %>
+    <div class="card" style="border-radius:0;">
+      <div class="card-content">
+        <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;">
+          <thead>
+            <tr>
+              <th scope="col">Cliente </th>
+              <th scope="col">Email </th>
+              <th scope="col">Teléfono </th>
+              <th scope="col">Estado</th>
+              <th scope="col">Información</th>
+              <th scope="col">Gastos</th>
+              <th scope="col">Perros</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @personas.each do |persona| %>
+              <tr>
+                <% if persona.user.is_active %>
+                  <td class="light-font"><%= persona.nombre.capitalize %> <%= persona.apellido.capitalize %></td>
+                  <td class="light-font"><%= persona.user.email  %></td>
+                  <td class="light-font"><%= persona.telefono %></td>
+                  <td class="light-font" style="color: #007E33">
+                      Activo                    
+                  </td>
+                  <td>
+                    <%= link_to persona_datos_personales_path(persona) do %>
+                      <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver cliente">visibility</i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to historial_gastos_path(user_id: persona.user.id) do %>
+                      <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Gastos">paid</i>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to persona_perros_personaperro_path(persona) do %>
+                      <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver sus perros">pets</i>
+                    <% end %>
+                    <%= link_to new_persona_perro_path(persona) do %>
+                      <i class="material-icons" style="margin-left:5%;" data-bs-toggle="tooltip" data-bs-placement="top" title="Añadirle un perro">add</i>
+                    <% end %>
+                  </td>
+                  <%# <td>
+                    <%= form_with(url: baja_persona_path(persona.id), method: :post, class: 'confirm-form') do |form| %>
+                      <%# <button type="submit" class="btn-link" style="background:none; border:none; color: red;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dar de baja">
+                        <i class="material-icons">block</i>
+                      </button>
+                    <% end %>
+                  <%# </td>   %>
+                  
+                  <td>
+                    <%= form_with(url: baja_persona_path(persona.id), method: :post, class: 'confirm-form', data: { has_turnos_pendientes: persona.perros_con_turnos_pendientes.any?, perros_con_turnos_pendientes_details: persona.perros_con_turnos_pendientes_detalles }) do |form| %>
+                      <button type="submit" class="btn-link" style="background:none; border:none; color: red;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dar de baja">
+                        <i class="material-icons">block</i>
+                      </button>
+                    <% end %>
+                  </td>
+
+                <% else %>
+
+                  <td class="light-font" style="background-color: rgba(242, 242, 242, 0.5)"><%= persona.nombre.capitalize %> <%= persona.apellido.capitalize %></td>
+                  
+                  <td class="light-font" style="background-color: rgba(242, 242, 242, 0.5)"><%= persona.user.email  %></td>
+                  
+                  <td class="light-font" style="background-color: rgba(242, 242, 242, 0.5)"><%= persona.telefono %></td>
+                  
+                  <td class="light-font" style="background-color: rgba(242, 242, 242, 0.5); color: #FF8800;">
+                      Inactivo                    
+                  </td>
+                  
+                  <td style="background-color: rgba(242, 242, 242, 0.5)">
+                    <%= link_to persona_datos_personales_path(persona) do %>
+                      <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver cliente">visibility</i>
+                    <% end %>
+                  </td>
+                  <td style="background-color: rgba(242, 242, 242, 0.5)">
+                    <%= link_to historial_gastos_path(user_id: persona.user.id) do %>
+                      <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver Gastos">paid</i>
+                    <% end %>
+                  </td>
+                  <td style="background-color: rgba(242, 242, 242, 0.5)">
+                    <%= link_to persona_perros_personaperro_path(persona) do %>
+                      <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Ver sus perros">pets</i>
+                    <% end %>
+                  </td>
+                  <td style="background-color: rgba(242, 242, 242, 0.5)">
+                    -
+                  </td>
+                <% end %>
+              </tr> 
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card" style="border-radius: 0; position: relative; min-height: 100px;">
+            <div class="card-content" style="position: relative; margin-bottom: 0;">
+              <h4 class="mt-3">Aún no se hicieron registros de clientes en el sistema.</h4>
+              <img src="<%= asset_path('perritosModal.png') %>" alt="Imagen" style="position: absolute; top: -48px; right: 20px; max-width: 30%; height: auto;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <br>
+  <a class="btn btn-primary btn-volver" href="/homeVeterinario"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const forms = document.querySelectorAll('.confirm-form');
+      forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+
+          const hasTurnosPendientes = form.dataset.hasTurnosPendientes === 'true';
+          const detallesTurnosPendientes = form.dataset.perrosConTurnosPendientesDetails;
+
+          let mensaje = 'Esto marcará al cliente como inactivo y ya no podrá iniciar sesión.';
+          if (hasTurnosPendientes) {
+            mensaje = `Esta persona tiene perros con turnos pendientes. Los cuales son: ${detallesTurnosPendientes}
+            Al dejarlo inactivo los turnos serán cancelados y el cliente ya no podrá iniciar sesión.`;
+          }
+
+          Swal.fire({
+            title: '¿Estás seguro?',
+            text: mensaje,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, estoy seguro'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              form.submit();
+            }
+          });
+        });
+      });
+    });
+
+  </script>
+<% end %>
+
+
+  <%# <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const forms = document.querySelectorAll('.confirm-form');
+      forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+          const confirmed = confirm('¿Estás seguro?');
+          if (!confirmed) {
+            event.preventDefault();
+          }
+        });
+      });
+    });
+  </script> %>
+
+  <%# document.addEventListener('DOMContentLoaded', function() {
+      const forms = document.querySelectorAll('.confirm-form');
+      forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+          event.preventDefault(); // Evita el envío automático del formulario
+
+          Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esto marcará al cliente como inactivo.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, estoy seguro'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Si el usuario confirma, envía el formulario
+              form.submit();
+            }
+          });
+        });
+      });
+    }); %>

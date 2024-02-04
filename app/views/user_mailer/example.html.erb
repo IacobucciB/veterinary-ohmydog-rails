@@ -1,0 +1,30 @@
+<!--
+  Esto es la vista del mail que le llega al usuario registrado con la contrasenia
+  solo le llega cuando se registro de forma exitosa
+-->
+
+
+
+<h1>Estimado cliente, </h1>
+<p>
+    Hemos activado el acceso a nuestro sitio web para su cuenta.<br>
+    Deberá iniciar sesión utilizando las siguientes credenciales: <br>
+    <strong>Email: </strong> <%= @user.email %> 
+    <br>
+    <strong>Contraseña: </strong> <%= @random_password %>
+    <br>
+    <br>
+    Por motivos de seguridad, luego de ingresar le recomendamos cambiar la contraseña que le hemos asignado.
+    Saludos Cordiales
+</p>
+
+<br><br><br>
+<p>
+    Esq. 1 y 47 - La Plata <br>
+    Teléfono: (0221) 481-0392 <br>
+    <br>
+    Consultas todos los días de la semana:<br>
+    Lunes a Sábados <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;-Horario mañana: de 8 a 13 Hs.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;-Horario tarde: de 15 a 23 Hs.<br>
+</p>

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  numero: MyString
+  nombre: MyString
+  fecha_vencimiento: 2023-12-03
+  codigo_seguridad: 1
+  saldo: 9.99
+
+two:
+  numero: MyString
+  nombre: MyString
+  fecha_vencimiento: 2023-12-03
+  codigo_seguridad: 1
+  saldo: 9.99

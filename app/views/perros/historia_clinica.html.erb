@@ -1,0 +1,103 @@
+<% content_for :titulo do %>
+  <br>
+    <% if @turnos.any? %>
+      <div style="display: flex; align-items: center; margin-top:40px;" >
+        <i class="material-icons small left grey" style="margin-right: 10px;">today</i>
+        <h2 style="margin-top: 4px; font-weight: 200;"> Historia Clínica de <%= @turnos.first.perro.nombre %></h2>
+      </div>
+      <%= link_to "#", class: "btn d-print-none ", onclick: "window.print()" do %>
+        <i class="material-icons">print</i>
+      <% end %>
+    <% else %>
+      <div style="display: flex; align-items: center; margin-top:40px;" >
+        <i class="material-icons small left grey" style="margin-right: 10px;">today</i>
+        <h2 style="margin-top: 4px; font-weight: 200;"> Historia Clinica </h2>
+      </div>
+    <% end %>
+<% end %>
+
+<% if @turnos.any? %>
+  <% content_for :titulo do %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="detail">
+          <i class="material-icons extraextrasmall">timer</i>
+          <strong>Edad (meses):</strong> <%= @turnos.first.perro.edad %>
+        </div>
+        <div class="detail">
+          <i class="material-icons extraextrasmall">pets</i>
+          <strong>Raza:</strong> <%= @turnos.first.perro.tipo_raza.nombre %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="detail">
+          <i class="material-icons extraextrasmall">person</i>
+          <strong>Dueño:</strong> <%= @turnos.first.perro.persona.nombre %> <%= @turnos.first.perro.persona.apellido %>
+        </div>
+        <div class="detail">
+          <i class="material-icons extraextrasmall">person</i>
+          <strong>Sexo:</strong> <%= @turnos.first.perro.sexo %> 
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<% content_for :body do %>
+  <% if @turnos.any? %>
+    <div class="card" style="border-radius:0;">
+      <div class="card-content">
+        <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;" >
+          <thead>
+            <tr>
+              <th scope="col">Día</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Tipo de Turno</th>
+              <th> Peso </th>
+              <th scope="col">Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @turnos.each_with_index do |turno, index| %>
+              <tr>
+                <td><%= turno.dia.strftime("%d/%m/%Y") %></td>
+                <td><%= turno.franja_horaria %></td>
+                <td><%= turno.estado %></td>
+                <td> <%= turno.monto %></td>
+                <td><%= turno.tipo_turno.nombre %></td>
+                <% if turno.peso.present? %>
+                    <td> <%= turno.peso%></td>
+                <% else %>
+                  <td> - </td>
+                <% end %>
+                <td><%= turno.descripcion %></td>
+              <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card" style="border-radius: 0; position: relative; min-height: 100px;">
+            <div class="card-content" style="position: relative; margin-bottom: 0;">
+              <h4 class="mt-3">La historia clinica esta vacía</h4>
+              <img src="<%= asset_path('perritoSaludando.png') %>" alt="Imagen" style="position: absolute; top: -36px; right: 20px; max-width: 23%; height: auto;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <br>
+  <a class="btn btn-primary btn-volver d-print-none " href="/perros"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+<% end %>

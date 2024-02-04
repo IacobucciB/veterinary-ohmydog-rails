@@ -1,0 +1,2 @@
+module AdopcionesHelper
+end

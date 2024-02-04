@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  zona: MyString
+  dia: 2023-12-10
+  observacion: MyString
+  estado: 1
+  tipo: 1
+
+two:
+  zona: MyString
+  dia: 2023-12-10
+  observacion: MyString
+  estado: 1
+  tipo: 1

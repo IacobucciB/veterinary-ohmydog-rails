@@ -1,0 +1,73 @@
+<!--
+  Esta vista la tienen los visitantes
+  Es para contactar una persona que tiene un perro publicado en adopción
+-->
+
+<% content_for :titulo do %>
+    <br><br><br>
+    <div style="display: flex; align-items: center; text-align: center; margin-left:7%;">
+        <i class="material-icons small left grey" style="margin-right: 10px;">contact_phone</i>
+        <h2 style="margin-top: 4px; font-weight: 200; margin-bottom: 0;">&nbsp; Contactar para adopción</h2>
+    </div>
+    <blockquote class="blockquote" style="margin-left:7%;">
+      <h6>¡Estas en el proceso de adopción de un <%= @publicacion.tipo_raza.nombre %>! </h6> 
+    </blockquote>
+<% end %> 
+
+<% content_for :body do %>
+
+    <div class="container">
+        <div class="row justify-content-left">
+            <div class="col-md-9">
+                <div class="card" style="border-radius:0; margin-left:40px;">
+                    <div class="card-content">
+                        <%= form_tag({ controller: 'adopcions', action: 'adoptar_datos' }, method: 'post') do %>
+                            <br>
+                                <h6> Dejá tus datos acá abajo, el dueño del perro se contactará con vos a la brevedad </h6>
+                                <br>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="field">
+                                        <%= text_field_tag :email, (current_user ? current_user.email : params[:email]), placeholder: 'Email', class: 'form-control', size: '50', style: 'width:250px;', required: true %>
+                                    </div>
+                                    <div class="field" style="margin-left:2%">
+                                        <%= number_field_tag :telefono, (current_user ? current_user.persona.telefono : params[:telefono]), id: 'telefono_field', placeholder: 'Teléfono' , class: 'form-control', size: '50', style: 'width:250px;', required: true %>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-center" style="margin-top:8%;">
+                                    <div class="field">
+                                        <%= text_field_tag :nombre, (current_user ? current_user.persona.nombre : params[:nombre]), placeholder: 'Nombres', class: 'form-control', size: '50', style: 'width:250px;', required: true %>
+                                    </div>
+
+                                    <div class="field"  style="margin-left:2%">
+                                        <%= text_field_tag :apellido, (current_user ? current_user.persona.apellido : params[:apellido]), placeholder: 'Apellidos', class: 'form-control', size: '50', style: 'width:250px;', required: true  %>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-center" style="margin-top:8%;">
+                                    <div class="field">
+                                        <%= text_area_tag :razon, params[:razon], placeholder: '¿Por qué querés adoptar este perro?', class: 'form-control', size: '50', style: 'width:520px;' %>
+                                    </div>
+                                </div>
+
+                                <%= hidden_field_tag :id, value: @publicacion.id %>
+
+                                <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                                    <div class="actions">
+                                    <%= submit_tag 'Contactar', class: 'btn btn-primary', style: 'background-color: rgb(252, 145, 14); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;' %>
+                                    </div>
+                                </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <a class="btn btn-primary btn-volver" href="<%=root_path%>"
+        style="margin-left:5%;background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+        Volver
+        <i class="material-icons" style="margin-left:15px;">undo</i>
+    </a>
+<% end %> 

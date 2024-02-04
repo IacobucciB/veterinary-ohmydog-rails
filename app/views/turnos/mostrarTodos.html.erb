@@ -1,0 +1,166 @@
+<!--
+  Esto es la vista de todos los turnos del veterinario
+  se accede por el sidebar de la vista del veterinario
+-->
+
+<% content_for :titulo do %>
+  <br>
+  <div style="display: flex; align-items: center; margin-top:40px;" >
+    <i class="material-icons small left grey" style="margin-right: 10px;">today</i>
+    <h2 style="margin-top: 4px; font-weight: 200;"> Todos los turnos </h2>
+  </div>
+<% end %> 
+
+<% content_for :titulo_acciones do %>
+  <a class="btn btn-primary anchor-new-celeste" href="/turnos/subirUrgencia" style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; margin-top:23%; justify-content: center">
+    Turno de Urgencia
+    <i class="material-icons" style="margin-left:15px;">add</i>
+    <i class="material-icons" style="margin-left:15px;">today</i>
+  </a>
+  <br>
+<% end %>
+
+<% content_for :body do %>
+  <div class="row mb-10">
+    <div class="col-md-12">
+      <%= form_tag(turnos_todos_path, method: 'get', class: 'form-inline') do %>
+        <div class="row">
+          <div class="col-md-4">
+            <%= select_tag :filter, options_for_select(Turno.estados.keys.map { |k| [k.humanize, k] }, params[:filter]), class: 'form-control',  include_blank: "Seleccione Estado" %>
+            <%# <%= select_tag :filter, options_for_select(Paseador.service_types.keys.map { |k| [k.humanize, k] }, params[:filter]), class: "form-control", include_blank: "Seleccione Tipo de Servicio" %> 
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary" style="background-color: rgb(28, 150, 174); border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center; display: flex; align-items: center; justify-content: center;">
+              <i class="material-icons" style="margin-right: 5px;">search</i>
+              Buscar
+            </button>
+          </div>
+          <div class="col-md-2">
+            <a class="btn btn-primary btn-volver" href="/turnosAll" style="margin-top:0%; background-color: rgb(252, 145, 14); border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center; display: flex; align-items: center; justify-content: center;">
+              <i class="material-icons" style="margin-right: 5px;">close</i>
+              Limpiar
+            </a> 
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  <% if @turnos.any? %>
+  <%# <% if @turnos.select { |turno| turno.estado.downcase == 'pendiente' }.any? %> 
+    <div class="card" style="border-radius:0; margin-top:4%;">
+      <div class="card-content">
+        <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;">
+          <thead>
+            <tr>
+              <th scope="col">Día</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Perro</th>
+              <th scope="col">Dueño</th>
+              <th scope="col">Tipo de Turno</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @turnos.each_with_index do |turno, index| %>
+              <tr>
+                <% if turno.estado == 'presente' %>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= turno.dia.strftime("%d/%m/%Y") %></td>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= turno.franja_horaria.capitalize%></td>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= turno.estado.capitalize %></td>
+                  <td style="background-color: rgba(200, 247, 197);, 1"> 
+                    <%= turno.monto %>
+                  </td>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= turno.perro.nombre %></td>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= "#{turno.perro.persona.nombre} #{turno.perro.persona.apellido}" %></td>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= turno.tipo_turno.nombre %></td>
+                  <td style="color:darkgreen; background-color: rgba(200, 247, 197);, 1">
+                    Finalizado
+                  </td>
+                <% elsif turno.estado == 'cancelado' || turno.estado == 'rechazado' || turno.estado == 'ausente' %>
+                  <td style="background-color: #ffecb3"><%= turno.dia.strftime("%d/%m/%Y") %></td>
+                  <td style="background-color: #ffecb3"><%= turno.franja_horaria.capitalize%></td>
+                  <td style="background-color: #ffecb3"><%= turno.estado.capitalize %></td>
+                  <td style="background-color: #ffecb3"> 
+                    -
+                  </td>
+                  <td style="background-color: #ffecb3"><%= turno.perro.nombre %></td>
+                  <td style="background-color: #ffecb3"><%= "#{turno.perro.persona.nombre} #{turno.perro.persona.apellido}" %></td>
+                  <td style="background-color: #ffecb3"><%= turno.tipo_turno.nombre %></td>
+                  <td style="color:#ff6f00; background-color: #ffecb3">
+                    <% if turno.estado == 'presente' %>
+                      Finalizado
+                    <% else %>
+                      <%= turno.estado.capitalize %>
+                    <% end %>
+                  </td>
+                <% else %>
+                  <td><%= turno.dia.strftime("%d/%m/%Y") %></td>
+                  <td>
+                    <% if turno.hora.present? %>
+                      <%= turno.hora.strftime("%H:%M") %>
+                    <% else %>
+                      <%= turno.franja_horaria %>
+                    <% end %>
+                  </td>
+                  <td><%= turno.estado.capitalize %></td>
+                  <td> 
+                    -
+                  </td>
+                  <td><%= turno.perro.nombre %></td>
+                  <td><%= "#{turno.perro.persona.nombre} #{turno.perro.persona.apellido}" %></td>
+                  <td><%= turno.tipo_turno.nombre %></td>
+                  <td>
+                      <% if turno.estado == 'pendiente' && (turno.dia > Date.today) %>
+                        <%= link_to 'Aceptar', aceptar_turno_path(turno.id), class: 'btn btn-success' %>
+                        <%= link_to 'Rechazar', rechazar_turno_path(turno.id) , class: 'btn btn-danger' %>
+                      <% elsif turno.estado == 'aceptado' && (turno.dia <= Date.today) %>
+                         <% if turno.hora.present? %>
+                          <% if (Time.now.hour * 3600 + Time.now.min * 60) > (turno.hora.hour * 3600 + turno.hora.min * 60) %>
+                            <%= link_to presente_turno_path(turno) do %>
+                              <i class="material-icons" style="color:green; margin-right:6%;" data-bs-toggle="tooltip" data-bs-placement="top" title="Asistió al turno">check</i>
+                            <% end %>
+                            <%= link_to ausente_turno_path(turno) do %>
+                              <i class="material-icons" style="color:red" data-bs-toggle="tooltip" data-bs-placement="top" title="No asistió al turno">close</i>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card" style="border-radius: 0; position: relative; min-height: 100px;">
+            <div class="card-content" style="position: relative; margin-bottom: 0;">
+              <h4 class="mt-3">No hay turnos correspondientes </h4>
+              <img src="<%= asset_path('perritoSaludando.png') %>" alt="Imagen" style="position: absolute; top: -36px; right: 20px; max-width: 23%; height: auto;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <br>
+  <a class="btn btn-primary btn-volver" href="/homeVeterinario"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+  </script>
+<% end %>

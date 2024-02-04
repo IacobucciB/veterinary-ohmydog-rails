@@ -1,0 +1,51 @@
+<!-- app/views/turnos/historial_gastos.html.erb -->
+<% content_for :titulo do %>
+  <br>
+  <div style="display: flex; align-items: center; margin-top:40px;" >
+    <i class="material-icons small left grey" style="margin-right: 10px;">paid</i>
+    <h2 style="margin-top: 4px; font-weight: 200;"> Historial de Gastos de <%= @cliente.persona.nombre %> <%= @cliente.persona.apellido.capitalize %></h2>
+  </div>
+<% end %> 
+
+<% content_for :body do %>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-11">
+          <div class="card" style="border-radius:0;">
+            <div class="card-content">
+              <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                  <tr style="background-color: #4CAF50; color: white;">
+                    <th style="padding: 12px; text-align: left;">Fecha</th>
+                    <th style="padding: 12px; text-align: left;">Tipo de Turno</th>
+                    <th style="padding: 12px; text-align: left;">Perro</th>
+                    <th style="padding: 12px; text-align: left;">Monto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @turnos.each do |turno| %>
+                    <tr>
+                      <td style="padding: 12px; text-align: left;"><%= turno.dia.strftime("%d/%m/%Y") %></td>
+                      <td style="padding: 12px; text-align: left;"><%= turno.tipo_turno.nombre %></td>
+                      <td style="padding: 12px; text-align: left;"><%= turno.perro.nombre %></td>
+                      <td style="padding: 12px; text-align: left;">$ <%= turno.monto %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top: 20px; font-size: 18px; color: #333; text-align: right; margin-right:35px;">
+      Total de Gastos: $<%= @turnos.sum(:monto) %>
+    </p>
+
+    <a href="/personas" style="display: flex; align-items: center; justify-content: center; background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 20%; letter-spacing: 0.5px; vertical-align: center; text-decoration: none; color: white; margin-top: 20px;">
+      Volver
+      <i class="material-icons" style="margin-left: 20px;">undo</i>
+    </a>
+  </div>
+<% end %>
+

@@ -1,0 +1,59 @@
+<!-- 
+    Esta es la vida del visitante en la pagina para ver las DONACIONES
+-->
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; justify-content: center; margin-top: 8%;">
+    <i class="material-icons medium left azul" style="margin-right: 10px;">campaign</i>
+    <h2 style="margin-top: 4px; font-weight: 300;">Campañas de donación activas</h2>
+  </div>
+<% end %>
+
+<% content_for :body do %>
+  <div class="container">
+
+    <div class="row">
+      <% @campanias.each do |campania| %>
+        <div class="col-md-4">
+          <div class="card<%= ' finalizada' if campania.fecha_final && campania.fecha_final < DateTime.now %>">
+            <div class="card-body">
+              <h5 class="card-title<%= ' finalizada' if campania.fecha_final && campania.fecha_final < DateTime.now %>">
+                <%= campania.nombre %>
+                <% if campania.fecha_final && campania.fecha_final < DateTime.now %>
+                  - Finalizada
+                <% end %>
+              </h5>
+              <p class="card-text"><%= campania.descripcion %></p>
+              <p class="card-text">Fecha Final: <%= campania.fecha_final.strftime('%d-%m-%Y %H:%M') %></p>
+              <% if campania.monto_actual.present? %>
+                <p class="card-text">Monto Actual: <%= number_to_currency(campania.monto_actual, unit: '$', separator: ',', delimiter: '.') %></p>
+              <% end %>
+
+              <% if campania.monto_objetivo.present? %>
+                <p class="card-text">Monto Objetivo: <%= number_to_currency(campania.monto_objetivo, unit: '$', separator: ',', delimiter: '.') %></p>
+              <% end %>  
+
+              <% if campania.fecha_final && campania.fecha_final > DateTime.now %>
+                <%= link_to 'Donar', donar_visitante_path(campania), class: 'btn btn-primary btn-donar', style: 'background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 100%; letter-spacing: .5px; vertical-align: center; display: flex; align-items: center; justify-content: center; margin-top: 10px;' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <a class="btn btn-primary btn-volver d-print-none " href="/"
+      style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+      Volver
+      <i class="material-icons" style="margin-left:15px;">undo</i>
+    </a>
+  </div>
+  <br><br><br>
+  <!-- Puedes agregar el siguiente script para manejar el clic en el botón de donar -->
+  <script>
+    document.getElementById('donate_button_placeholder').addEventListener('click', function(event) {
+      event.preventDefault();
+      alert("Estimado visitante, todavía el servicio para donación no está activo en la página. Por favor, comuníquese con la veterinaria para donar a esta campaña por otras formas.");
+      // Puedes agregar más lógica aquí según tus necesidades
+    });
+  </script>
+<% end %>

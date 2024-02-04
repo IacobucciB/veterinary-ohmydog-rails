@@ -1,0 +1,166 @@
+
+<!--
+  Esta vista es el perfil de la persona con sus perros asociados abajo
+  Esta vista solo esta disponible para el Usuario
+  Esta el boton de editar perfil y el boton de cambiar contrasenia
+-->
+
+<% content_for :body do %>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="card" style="border-radius: 0; position: relative; margin-top:90px;">
+          <div class="card-content">
+            <div class="row">
+              <div class="col-md-3 text-center mt-3">
+                <img src="/assets/user.png" alt="Imagen de usuario" class="img-fluid rounded-circle" style="max-width: 100px; margin-top: 10px;">
+              </div>
+              <div class="col-md-6">
+                <h5 style="font-size:1.30rem; line-height: 110%; margin: .82rem 0 .656rem 0; color: #333"> 
+                <%= @persona.nombre %> <%= @persona.apellido %>
+                </h5>
+                <hr class="my-4">
+                <div class="profile-details">
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">contacts</i>
+                    <strong>DNI:</strong> <%= @persona.dni %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">call</i>
+                    <strong>Teléfono:</strong> <%= @persona.telefono %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">contacts</i>
+                    <strong>Nacimiento:</strong> <%= @persona.nacimiento.strftime("%d de %B de %Y") %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">payments</i>
+                    <strong>Donante:</strong> <%= @persona.donante ? 'Sí' : 'No' %>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+
+                <div class="profile-actions text-center" style="margin-left: 60px; margin-top: 30px;">
+                  <%= link_to personas_editar_path(@persona), class: 'btn btn-primary editar-perfil-naranja d-flex justify-content-center align-items-center' do %>
+                    Editar <i class="material-icons extraextrasmall ml-1" style="margin-left:10px;">edit</i>
+                  <% end %>
+                  <% if user_signed_in? %>
+                    <%= link_to edit_user_registration_path , class: 'btn btn-primary editar-perfil-naranja d-flex justify-content-center align-items-center', style: "margin-top:40px;" do %>
+                      Cambiar contraseña <i class="material-icons extraextrasmall ml-1" style="margin-left:10px;">password</i>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if @perros.any? %>
+      <div class="card" style="border-radius:0;">
+        <div class="card-content">
+          <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Edad</th>
+                <th scope="col">Raza</th>
+                <th scope="col">Sexo</th>
+                <th scope="col">Color</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Antecedentes</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @perros.each_with_index do |perro, index| %>
+                <tr>
+                  <td><%= perro.nombre %></td>
+                  <td><%= perro.edad %></td>
+                  <td><%= perro.tipo_raza.nombre %></td>
+                  <td><%= perro.sexo %></td>
+                  <td><%= perro.color %></td>
+                  <td><%= perro.descripcion %></td>
+                  <td><%= perro.antecedentes %></td>
+                  <%# <td>
+                    <% if perro.is_active %>
+                      <%# <%= form_with(url: baja_perro_path(perro.id), method: :post) do |form| %>
+                        <%# <button type="submit" class="btn-link" style="background:none; border:none; color: red;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dar de baja">
+                          <i class="material-icons">block</i>
+                        </button>
+                      <% end %>
+                    <%# <% end %> 
+                  <%# </td>    %>
+                  <td>
+                    <%= form_with(url: baja_perro_path(perro.id), method: :post, class: 'confirm-form', data: { has_turnos_pendientes: perro.tiene_turnos_pendientes?, turnos_pendientes_count: perro.turnos_pendientes_count }) do |form| %>
+                      <button type="submit" class="btn-link" style="background:none; border:none; color: red;" data-bs-toggle="tooltip" data-bs-placement="top" title="Dar de baja">
+                        <i class="material-icons">block</i>
+                      </button>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% else %>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="card" style="border-radius: 0; position: relative; min-height: 100px;">
+              <div class="card-content" style="position: relative; margin-bottom: 0;">
+                <h4 class="mt-3">No hay perros registrados.</h4>
+                <img src="<%= asset_path('perroPaseadores2.png') %>" alt="Imagen" style="position: absolute; top: 0; right: 0; max-width: 15%; height: auto;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+      });
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('.confirm-form');
+        forms.forEach(form => {
+          form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const hasTurnosPendientes = form.dataset.hasTurnosPendientes === 'true';
+            const turnosPendientesCount = form.dataset.turnosPendientesCount;
+
+            let mensaje = '¿Estás seguro que querés darle de baja al Perro?';
+            if (hasTurnosPendientes) {
+              mensaje = `Este perro tiene ${turnosPendientesCount} turnos pendientes. 
+              Al darle de baja los turnos serán cancelados.`;
+            }
+
+            Swal.fire({
+              title: '¿Estás seguro?',
+              text: mensaje,
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              cancelButtonColor: '#3085d6',
+              confirmButtonText: 'Sí, estoy seguro'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                form.submit();
+              }
+            });
+          });
+        });
+      });
+
+    </script>
+<% end %>

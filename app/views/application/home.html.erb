@@ -1,0 +1,53 @@
+<!--
+  Este es el HOME de la pagina
+  Esta vista la tienen todos del inicio de la pagina 
+-->
+
+
+<% content_for :title, 'Título de la Página de Inicio' %>
+
+<% content_for :body do %>
+  <!-- Carrusel -->
+    <div class=row>
+      <div id="carouselIndex" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <a href="/under_construction">
+              <img src="<%= asset_path('Carrousel1.png') %>" class="d-block w-100" alt="...">
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="/ver_campanias_publico">
+              <img src="<%= asset_path('Carrousel2.png') %>" class="d-block w-100" alt="...">
+            </a>
+          </div>
+          <div class="carousel-item">
+            <img src="<%= asset_path('Carrousel3.png') %>" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndex" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselIndex" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
+      </div>
+    </div>
+
+    <div class=row>
+      <div class="d-grid gap-5">
+        <br><br><br>
+        <a href="/turnos" class="btn-index" role="button">TURNOS</a>
+        <a href=<%= adopciones_index_path%> class="btn-index" role="button">ADOPCIONES</a>
+        <a href=<%=  perdido_encontrado_visitante_path%> class="btn-index" role="button">PÉRDIDA</a>
+        <a href=<%=  index_encontrado_visitante_path%> class="btn-index" role="button">BÚSQUEDA</a>
+        <a href=<%= '/ver_paseadores_publico'%> class="btn-index" role="button">PASEADORES Y CUIDADORES</a>
+        <a href=<%= under_construction_path%> class="btn-index" role="button">CRUZA</a>
+        <a href=<%= '/ver_campanias_publico'%> class="btn-index" role="button">DONACIONES</a>
+        <br><br><br>
+      </div>
+    </div>
+<% end %>
+

@@ -1,0 +1,61 @@
+<% content_for :titulo do %>
+  <br>
+  <div style="display: flex; align-items: center; margin-top:40px;" >
+    <i class="material-icons small left grey" style="margin-right: 10px;">healing</i>
+    <h2 style="margin-top: 4px; font-weight: 200;"> Actualizacion de Historia Clínica para <%= @turno.perro.nombre %></h2>
+  </div>
+  <blockquote class="blockquote">
+        <h6>
+          <%= @turno.dia.strftime("%d/%m/%Y") %> -
+          Turno de tipo: <%= @turno.tipo_turno.nombre %>
+        </h6>
+    </blockquote>
+<% end %> 
+
+<% content_for :body do %>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card" style="border-radius:0;">
+          <div class="card-content">
+
+            <div class="row" style="margin-left:10%;">
+              <div class="col-md-6">
+                <strong>Día:</strong>
+                <%= @turno.dia.strftime("%d/%m/%Y") %>
+              </div>
+              <div class="col-md-6">
+                <strong>Tipo de Turno:</strong>
+                <%= @turno.tipo_turno.nombre %>
+              </div>
+            </div>
+
+            <div class="row" style="margin-left:10%; margin-top:3%;">
+              <div class="col-md-6">
+                <strong>Peso:</strong>
+                <%= @turno.peso %> kg
+              </div> 
+              <div class="col-md-6">
+                <strong>Monto a cobrar:</strong>
+                <%= @turno.monto %>
+              </div> 
+            </div>
+
+            <div class="row" style="margin-left:10%; margin-top:3%;">
+              <div class="col-md-6">
+                <strong>Descripción:</strong>
+                <%= @turno.descripcion %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <a class="btn btn-primary btn-volver" href="/turnos_del_dia" style="background-color: rgb(28, 150, 174);border: none; border-radius: 2px; width: 10%; letter-spacing: .5px; vertical-align: center;display: flex; align-items: center; justify-content: center">
+    Volver <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+<% end %>

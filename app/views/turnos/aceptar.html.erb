@@ -1,0 +1,66 @@
+<% content_for :titulo do %>
+    <br>
+    <div style="display: flex; align-items: center; margin-top:6%;" >
+        <i class="material-icons small left grey" style="margin-right: 10px;">today</i>
+        <h2 style="margin-top: 4px; font-weight: 200;"> Aceptar Turno para <%= @turno.perro.nombre %> </h2>
+    </div>
+    <blockquote class="blockquote">
+        <h6>Turno de tipo: <%= @turno.tipo_turno.nombre %> - 
+        <%= @turno.dia.strftime("%d/%m/%Y") %>
+        </h6>
+    </blockquote>
+<% end %> 
+
+<% content_for :body do %>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-11">
+                <div class="card" style="border-radius:0;">
+                    <div class="card-content">
+                        <%= form_with(url: procesar_aceptar_turno_path(@turno), method: :post, id: 'mi_formulario', data: { perro_nombre: @turno.perro.nombre, tipoTurno: @turno.tipo_turno.nombre, dia: @turno.dia, franja_horaria: @turno.franja_horaria }.to_json) do |form| %>
+
+                            <div class="form-group" style="margin-top:2%;">
+                                <%= form.label :anotacion, 'Email:' %>
+                                <%= form.text_area :anotacion, class: 'form-control', rows: 5, placeholder: 'No se pudo cargar el texto por defecto. Ingrese uno manualmente.', id: 'anotacion_textarea'%>
+                            </div>
+
+                            <br>
+                            <label for="hora_cita">Hora de confirmación:</label>
+                            <%= form.time_select :hora_cita, id: 'hora_cita' %>
+                            
+                            <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                                <div class="actions">
+                                <%= form.submit 'Confirmar Turno', class: 'btn btn-primary', style: 'background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;' %>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <br>
+  <a class="btn btn-primary btn-volver" href="/turnos" style="background-color: rgb(28, 150, 174);border: none; border-radius: 2px; width: 10%; letter-spacing: .5px; vertical-align: center;display: flex; align-items: center; justify-content: center">
+    Volver <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+  <script>
+    function personalizarAnotacion() {
+    var formData = JSON.parse($('#mi_formulario').attr('data'));
+    var perroNombre = formData.perro_nombre;
+    var tipoTurno = formData.tipoTurno;
+    var dia = formData.dia;
+    var franjaHoraria = formData.franja_horaria;
+    //var horaCita = $('#hora_cita').val();
+
+    var defaultPlaceholder = 'Estimado cliente, su turno fue confirmado. \nTendrá un turno de tipo ' + tipoTurno + ' para ' + perroNombre +
+      ' el día ' + dia + ' en la franja horaria ' + franjaHoraria + '.'
+    $('#anotacion_textarea').val(defaultPlaceholder);
+    }
+    $(document).ready(function() {
+        personalizarAnotacion();
+    });
+ </script>
+<% end %>
+

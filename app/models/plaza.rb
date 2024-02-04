@@ -1,0 +1,2 @@
+class Plaza < ApplicationRecord
+end

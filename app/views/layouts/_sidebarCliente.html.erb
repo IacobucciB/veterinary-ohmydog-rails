@@ -1,0 +1,46 @@
+<!--
+  Esta es la vista de la sidebar que tiene el Usuario
+-->
+
+
+<nav id="sidebar">
+
+    <li class="list-unstyled components" style="margin: 0; padding: 0;">
+        <a href="/homeClientes" class="list-unstyled components">
+        <i class="material-icons ">dashboard</i>Escritorio
+        </a>
+    <hr class="my-4" style=" width: 155%;">
+        <a href="<%= show_my_data_path(id: current_user.persona.id) %>" class="list-unstyled components">
+        <i class="material-icons">person</i>Perfil
+        </a>
+    <hr class="my-4" style=" width: 155%;">
+        <a href="<%= new_turno_path %>" class="list-unstyled components">
+        <i class="material-icons ">today</i>Turnos
+        </a>
+    <hr class="my-4" style=" width: 155%;">
+        <a href="/adopciones" class="list-unstyled components">
+        <i class="material-icons ">pets</i>Adopciones
+        </a>
+    <hr class="my-4" style=" width: 155%;">
+        <a href="<%= perdido_encontrado_usuario_path %>" class="list-unstyled components">
+        <i class="material-icons ">pin_drop</i>Perdidos
+        </a>
+    <hr class="my-4" style=" width: 155%;">
+        <a href="<%= index_encontrado_usuario_path %>" class="list-unstyled components">
+        <i class="material-icons ">pin_drop</i>Encontrado
+        </a>
+    <hr class="my-4" style=" width: 155%;">
+        <a href="<%= index_paseador_usuario_path %>" class="list-unstyled components">
+        <i class="material-icons ">map</i>Paseadores
+        </a>
+    <hr class="my-4" style=" width: 155%;">
+        <a href="<% under_construction_path %>" class="list-unstyled components">
+        <i class="material-icons ">favorite</i>Cruza
+        </a>
+    <hr class="my-4" style=" width: 155%;">
+        <a href="<%= ver_campanias_path %>" class="list-unstyled components">
+        <i class="material-icons ">payments</i>Donaciones
+        </a>
+    <hr class="my-4" style=" width: 155%;">
+    </li>
+</nav>

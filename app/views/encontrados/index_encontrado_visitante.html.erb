@@ -1,0 +1,64 @@
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
+    <i class="material-icons medium left grey" style="margin-right: 10px;">search</i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Perros Encontrados</h2>
+</div>
+<% end %>
+
+<% content_for :body do %>
+
+  <div class="col-md-10 mx-auto">
+    <div class="card" style="border-radius:0;">
+      <div class="card-content">
+
+    <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;">
+      <thead>
+        <tr>
+          <th>Lugar</th>
+          <th>Dia</th>
+          <th>Descripción</th>
+          <th>Color</th>
+          <th>Tamaño</th>
+          <th>Estado</th>
+          <th>Contacto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @encontrados.each do |encontrado| %>
+          <% if encontrado.estado == 'Hallado' %>
+            <tr>
+            <td style="background-color: rgba(200, 247, 197);, 1"><%= encontrado.lugar %></td>
+            <td style="background-color: rgba(200, 247, 197);, 1"><%= encontrado.dia %></td>
+            <td style="background-color: rgba(200, 247, 197);, 1"><%= encontrado.descripcion %></td>
+            <td style="background-color: rgba(200, 247, 197);, 1"><%= encontrado.color %></td>
+            <td style="background-color: rgba(200, 247, 197);, 1"><%= encontrado.tamanio %></td>
+            <td style="background-color: rgba(200, 247, 197);, 1"><%= encontrado.estado %></td>
+            <td style="background-color: rgba(200, 247, 197);, 1"> - </td>
+            </tr>
+          <% else %>
+            <tr class="item-perdido-encontrado">
+              <td><%= encontrado.lugar %></td>
+              <td><%= encontrado.dia %></td>
+              <td><%= encontrado.descripcion %></td>
+              <td><%= encontrado.color %></td>
+              <td><%= encontrado.tamanio %></td>
+              <td><%= encontrado.estado %></td>
+              <td><%= encontrado.user.email %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+    </div>
+    </div>
+
+  <a class="btn btn-primary btn-volver" href="/"
+    style="margin-left:7%;background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+
+
+<% end %>

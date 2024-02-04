@@ -1,0 +1,158 @@
+<!--
+  Esta vista la tienen todos
+  Se ven las adopciones de adopción
+-->
+
+<% content_for :titulo do %>
+  <br><br><br>
+  <div style="display: flex; align-items: center; text-align: center;">
+    <i class="material-icons small left grey" style="margin-right: 10px;">pets</i>
+    <h2 style="margin-top: 4px; font-weight: 200; margin-bottom: 0;">&nbsp; Perros en adopción</h2>
+  </div>
+<% end %>
+
+<% content_for :titulo_acciones do %>
+  <br>
+    <% if current_user %>
+    <%# <a class="btn btn-primary anchor-new-celeste" href= "<%= adopciones_publicacion_new_mi_perro_path(id: current_user.persona.id) %>
+      <%# style="background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center; margin-top: 20%;">  %>
+      <%# Publicar mis perros  %>
+      <%# <i class="material-icons" style="margin-left:15px;">add</i>  %>
+      <%# <i class="material-icons" style="margin-left:15px;">pets</i>  %>
+    <%# </a>   %>
+    <a class="btn btn-primary anchor-new-celeste" href= "<%= adopciones_publicacion_new_path(id: current_user.persona.id) %>"
+      style="background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center; margin-top: 20%;">
+      Publicar un perro
+      <i class="material-icons" style="margin-left:15px;">add</i>
+      <i class="material-icons" style="margin-left:15px;">pets</i>
+    </a>
+  <% end %>
+  <br>
+<% end %>
+
+<% content_for :body do %>
+  <% if current_user %>
+    <a class="btn btn-primary anchor-new-celeste" href="<%= adopciones_mis_publicaciones_path(id: current_user.persona.id) %>"
+      style="background-color: rgb(252, 145, 14); border: none; border-radius: 2px; width: 20%; letter-spacing: 0.5px; vertical-align: center; display: flex; align-items: center; justify-content: center;">
+      Mis publicaciones
+      <i class="material-icons" style="margin-left: 15px;">visibility</i>
+    </a>
+  <% end %>
+  <% if @adopciones.any? %>
+    <% if !current_user %>
+      <div class="col-md-8 mx-auto">
+    <% end %>
+    <div class="card" style="border-radius:0;">
+      <div class="card-content">
+        <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;">
+          <thead>
+            <tr>
+              <th scope="col">Sexo</th>
+              <th scope="col">Tamaño</th>
+              <th scope="col">Raza</th>
+              <th scope="col">Origen</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @adopciones.each do |adopcion| %>
+              <% if adopcion.estado == "Publicado" %>
+                <tr>
+                  <td><%= adopcion.sexo %></td>
+                  <td><%= adopcion.tamanio %></td>
+                  <td><%= adopcion.tipo_raza.nombre %></td>
+                  <td><%= adopcion.origen %></td>
+                  <td>
+                    <% if user_signed_in? && current_user.persona.id == adopcion.persona_id %>
+                      <%= form_with(url: marcar_adoptado_path(adopcion.id), method: :post, class: 'confirm-form') do |form| %>
+                        <button type="submit" class="btn-link" style="background:none; border:none; color: green;" data-bs-toggle="tooltip" data-bs-placement="top" title="Marcar como adoptado">
+                          <i class="material-icons">check</i>
+                        </button>
+                      <% end %>
+                    <% else %>
+                      <%= link_to mail_adopcion_path(adopcion) do %>
+                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-placement="top" title="Me interesa adoptar el perro">mail</i>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% else %>
+                <tr>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= adopcion.sexo %></td>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= adopcion.tamanio %></td>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= adopcion.tipo_raza.nombre %></td>
+                  <td style="background-color: rgba(200, 247, 197);, 1"><%= adopcion.origen %></td>
+                  <td style="color:darkgreen; background-color: rgba(200, 247, 197);, 1">
+                    ¡Adoptado!
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% if !current_user %>
+    </div>
+  <% end %>
+  <% else %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card" style="border-radius: 0; position: relative; min-height: 100px;">
+            <div class="card-content" style="position: relative; margin-bottom: 0;">
+              <h4 class="mt-3">No hay perros registrados en adopción</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <br>
+  <% if current_user %>
+    <a class="btn btn-primary btn-volver" href="/homeCliente"
+        style="margin-left:2%; background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+        Volver
+        <i class="material-icons" style="margin-left:15px;">undo</i>
+    </a>
+  <% else %>
+    <a class="btn btn-primary btn-volver" href="/"
+        style="margin-left:6%; background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+        Volver
+        <i class="material-icons" style="margin-left:15px;">undo</i>
+    </a>
+  <% end %>
+
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+
+   document.addEventListener('DOMContentLoaded', function() {
+      const forms = document.querySelectorAll('.confirm-form');
+      forms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+          event.preventDefault(); // Evita el envío automático del formulario
+
+          Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esto marcará al perro como adoptado y la gente ya no se contactará por él.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, estoy seguro'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // Si el usuario confirma, envía el formulario
+              form.submit();
+            }
+          });
+        });
+      });
+    });
+  </script>
+<% end %>

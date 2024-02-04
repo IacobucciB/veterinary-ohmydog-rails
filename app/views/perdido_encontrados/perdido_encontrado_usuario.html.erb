@@ -1,0 +1,96 @@
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; justify-content: center; margin-top: 60px;">
+    <i class="material-icons medium left grey" style="margin-right: 10px;">search</i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Perros Perdidos</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 d-flex">
+      <a class="btn btn-primary anchor-new-celeste" href="<%= nuevo_perdido_encontrado_path %>"
+        style="background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:30%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center; margin-top: 5%; margin-top:10%; margin-right:3%;">
+        Agregar
+        <i class="material-icons" style="margin-left: 15px;">add</i>
+      </a>
+      <% if current_user %>
+        <a class="btn btn-primary anchor-new-celeste" href="<%= mis_publicaciones_perdidos_path(id: current_user.persona.id) %>"
+          style="background-color: rgb(252, 145, 14); border: none; border-radius: 2px; width: 30%; letter-spacing: 0.5px; vertical-align: center; display: flex; align-items: center; justify-content: center; margin-top:10%;">
+          Mis publicaciones
+          <i class="material-icons" style="margin-left: 15px;">visibility</i>
+        </a>
+      <% end %>
+      <a class="btn btn-primary anchor-new-celeste" href="<%= perros_perdidos_y_encontrados_path %>"
+        style="margin-left:3%; background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:30%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center; margin-top: 5%; margin-top:10%; margin-right:3%;">
+        Ver Reencuentros
+      </a>
+    </div>
+  </div>
+<% end %>
+
+<% content_for :body do %>
+  
+<% if @perdido_encontrados.any? %>
+    <div class="col-md-12 mx-auto">
+      <div class="card" style="border-radius:0;">
+        <div class="card-content">
+          <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;">
+            <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Nombre</th>
+              <th>Raza</th>
+              <th>Color</th>
+              <th>Sexo</th>
+              <th>Descripcion</th>
+              <th>Zona</th>
+              <th>Día</th>
+              <th>Observación</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @perdido_encontrados.each do |perdido_encontrado| %>
+              <tr class="item-perdido-encontrado">
+                <td style="width: 7%; height: 7%;">
+                  <% if perdido_encontrado.perro.foto.attached? %>
+                    <%# <%= link_to image_tag(perro.foto, class: "img-thumbnail"), perro.foto, data: { lightbox: "perros" } %> 
+                    <%= image_tag(perdido_encontrado.perro.foto, class: "img-thumbnail", style: "width:45%; height: 45%;") %>
+                  <% else %>
+                    <%= image_tag("perroPorDefecto.png", class: "img-thumbnail", style: "width: 75%; height: 45%;") %>
+                  <% end %>
+                </td>
+                <td><%= perdido_encontrado.perro.nombre %></td>
+                <td><%= perdido_encontrado.perro.tipo_raza.nombre %></td>     
+                <td><%= perdido_encontrado.perro.color %></td> 
+                <td><%= perdido_encontrado.perro.sexo %></td>    
+                <td><%= perdido_encontrado.perro.descripcion %></td>    
+                <td><%= perdido_encontrado.zona %></td>
+                <td><%= perdido_encontrado.dia %></td>
+                <td><%= perdido_encontrado.observacion %></td>
+                <td><%= perdido_encontrado.estado %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <% else %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card" style="border-radius: 0; position: relative; min-height: 100px;">
+            <div class="card-content" style="position: relative; margin-bottom: 0;">
+              <h4 class="mt-3">No hay registros de perros perdidos</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <br>
+  <a class="btn btn-primary btn-volver" href="/"
+    style="background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+<% end %>

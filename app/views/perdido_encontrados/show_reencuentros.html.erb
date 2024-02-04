@@ -1,0 +1,81 @@
+<% content_for :titulo do %>
+  <br><br><br>
+  <div style="display: flex; align-items: center; text-align: center; margin-left:5%;">
+    <i class="material-icons small left grey" style="margin-right: 10px;">pets</i>
+    <h2 style="margin-top: 4px; font-weight: 200; margin-bottom: 0;">&nbsp; ¡Reencuentros de perros perdidos!</h2>
+  </div>
+<% end %>
+
+<% content_for :body do %>
+  <% if @reencuentros.any? %>
+    <div class="card" style="border-radius:0;">
+      <div class="card-content">
+        <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;">
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Nombre</th>
+              <th>Raza</th>
+              <th>Color</th>
+              <th>Sexo</th>
+              <th scope="col">Zona</th>
+              <th scope="col">Día</th>
+              <th scope="col">Observación</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @reencuentros.each do |reencuentro| %>
+                <tr>
+                    <td style="width: 7%; height: 7%; background-color: rgba(200, 247, 197);, 1">
+                        <% if reencuentro.perro.foto.attached? %>
+                            <%= image_tag(perdido_encontrado.perro.foto, class: "img-thumbnail", style: "width:45%; height: 45%;") %>
+                        <% else %>
+                            <%= image_tag("perroPorDefecto.png", class: "img-thumbnail", style: "width: 75%; height: 45%;") %>
+                        <% end %>
+                    </td>
+                    <td style="background-color: rgba(200, 247, 197);, 1"><%= reencuentro.perro.nombre.capitalize %></td>
+                    <td style="background-color: rgba(200, 247, 197);, 1"><%= reencuentro.perro.tipo_raza.nombre.capitalize %></td>
+                    <td style="background-color: rgba(200, 247, 197);, 1"><%= reencuentro.perro.color.capitalize %></td>
+                    <td style="background-color: rgba(200, 247, 197);, 1"><%= reencuentro.perro.sexo.capitalize %></td>
+                    <td style="background-color: rgba(200, 247, 197);, 1"><%= reencuentro.zona.capitalize %></td>
+                    <td style="background-color: rgba(200, 247, 197);, 1"><%= reencuentro.dia.strftime("%d/%m/%Y") %></td>
+                    <td style="background-color: rgba(200, 247, 197);, 1"><%= reencuentro.observacion.capitalize %></td>
+                    <td style="color:darkgreen; background-color: rgba(200, 247, 197);, 1">
+                        ¡Hallado!
+                    </td>
+                </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  <% else %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card" style="border-radius: 0; position: relative; min-height: 100px;">
+            <div class="card-content" style="position: relative; margin-bottom: 0;">
+              <h4 class="mt-3">No hay reencuentros por el momento</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <br>
+  <a class="btn btn-primary btn-volver" href="/perdido_encontrado_visitante"
+    style="margin-left:3%;background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+   <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+  </script>
+<% end %>

@@ -1,0 +1,114 @@
+<!--
+  Esto es la vista de la creacion de turnos por perro,
+  se ve solo en la vista del Usuario, mientras tenga un perro asociado
+-->
+
+<% content_for :titulo do %>
+  <br>
+  <div style="display: flex; align-items: center; margin-top: 40px; margin-left: 50px;">
+    <i class="material-icons small left grey" style="margin-right: 10px;">today</i>
+    <h2 style="margin-top: 4px; font-weight: 200; margin-right: 10px;">Sacar un Turno</h2>  
+    <i class="material-icons extrasmall" id="openModal" type="button" style="margin-left: 20px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Ayuda de turnos">help</i> 
+  </div>
+<% end %> 
+
+<% content_for :titulo_acciones do %>
+<% end %>
+
+<% content_for :body do %>
+
+  <div class="container">
+    <div class="row justify-content-left">
+      <div class="col-md-7">
+        <div class="card" style="border-radius:0; margin-left:40px;">
+          <div class="card-content">
+            <%= form_with(model: @turno, local: true) do |form| %>
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field">
+                  <%= form.collection_select(:perro_id, current_user.persona.perros.where(is_active: true, is_lost: false), :id, :nombre, { prompt: '  ¿Para qué perro es?' }, {class: 'custom-select-collection'}) %>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field">
+                  <%= form.collection_select(:tipo_turno_id, TipoTurno.all, :id, :nombre, {prompt: 'Tipo de Turno'}, {class: 'custom-select-collection'}) %>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field">
+                  <%= form.date_field :dia, class: 'custom-select-collection' %>
+                </div>
+              </div>
+              <% if @turno && @turno.errors.has_key?(:dia) %>
+                <div class="alert alert-danger" style="width: 300px;">
+                  <% error_messages = @turno.errors[:dia] %>
+                  <% error_messages.each do |error_message| %>
+                    <%= error_message %><br>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <br>
+                <div class="field">
+                  <%= form.collection_select(:franja_horaria, Turno.franja_horaria.keys, :to_s, :humanize, {prompt: "Franja Horaria"}, {class: 'custom-select-collection'}) %>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                <div class="actions">
+                  <%= form.submit 'Solicitar Turno' , class: 'btn btn-primary', style: 'background-color: rgb(252, 145, 14); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;'%>
+                </div>
+              </div>
+            <% end %>
+
+              <% if @turno && @turno.errors.has_key?(:base) %>
+                <div class="alert alert-danger" style="width: 300px;">
+                  <% error_messages = @turno.errors[:base] %>
+                  <% error_messages.each do |error_message| %>
+                    <%= error_message %><br>
+                  <% end %>
+                </div>
+              <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <a class="btn btn-primary btn-volver" href="/homeClientes"
+    style="background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+  <img src="<%= asset_path('perroFondoTurno.png') %>" alt="Imagen" style="position: absolute; bottom: 0; right: 0;">
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Información de los turnos</h5>
+        </div>
+        <div class="modal-body">
+          <p>
+            Las vacunas de <strong>tipo A</strong> son para enfermedades virales, y tienen las siguientes restricciones: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-El mínimo de edad de aplicación es de <strong>2 meses. </strong><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Para perros de entre <strong>2 y 4 meses</strong> se da una <strong>primer dosis</strong> y 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;luego un <strong>refuerzo</strong> dentro de <strong>21 días</strong>.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Para perros <strong>mayores a 4 meses</strong> se da un refuerzo <strong>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;anualmente</strong>.<br>
+            Las vacunas de <strong>tipo B</strong> son Antirrábicas, y tienen las siguientes restricciones: <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Su mínimo de edad para aplicación es de <strong>4 meses</strong>.<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Se da <strong>anualmente</strong>.<br>
+            -Para los turnos de <strong>castración</strong> se debe tener una edad de <strong>mínimo 6 meses</strong>.<br>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

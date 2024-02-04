@@ -1,0 +1,105 @@
+<!-- 
+    Creacion de campañas, se ingresan todos los datos basicos para crearla
+-->
+
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
+    <i class="material-icons medium left grey" style="margin-right: 10px;">campaign</i>
+    <h2 style="margin-top: 4px; font-weight: 200;">Nueva Campaña de donacion</h2>
+</div>
+<% end %>
+
+<% content_for :body do %>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card" style="border-radius:0;">
+          <div class="card-content">
+            <%= form_with(model: @campania, url: campania_donacions_path, method: :post) do |form| %>
+
+              <% if @campania.errors.any? %>
+                <div class="alert alert-danger">
+                  <h4><%= pluralize(@campania.errors.count, "error") %> prohibió que esta campaña se guarde:</h4>
+                  <ul>
+                    <% @campania.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="form-group" style="margin-right:20%;">
+                  <%= form.label :nombre %>
+                  <%= form.text_field :nombre, class: 'form-control', placeholder: 'Nombre de la Campaña', style: 'width: 150%;' %>
+                  <% if @campania.errors[:nombre].any? %>
+                    <div class="error-message">
+                      <%= @campania.errors[:nombre].first %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="form-group" style="margin-top: 4%;">
+                  <%= form.label :fecha_final %>
+                  <%= form.datetime_select :fecha_final, class: 'form-control' %>
+                  <% if @campania.errors[:fecha_final].any? %>
+                    <div class="error-message">
+                      <%= @campania.errors[:fecha_final].first %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top: 3%;">
+                <%= form.label :descripcion, style: 'margin-left:10%;'%>
+                <%= form.text_area :descripcion, class: 'form-control', placeholder: 'Descripción de la Campaña', style: 'width:80%; margin-left:10%;' %>
+                <% if @campania.errors[:descripcion].any? %>
+                  <div class="error-message" style="margin-left:10%;">
+                    <%= @campania.errors[:descripcion].first %>
+                  </div>
+                <% end %>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="form-group" style="margin-top: 4%; margin-right:5%;">
+                  <%= form.label :monto_actual %>
+                  <%= form.text_field :monto_actual, class: 'form-control', placeholder: 'Monto Actual', style: 'width: 110%;' %>
+                  <% if @campania.errors[:monto_actual].any? %>
+                    <div class="error-message">
+                      <%= @campania.errors[:monto_actual].first %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="form-group" style="margin-top: 4%;">
+                  <%= form.label :monto_objetivo %>
+                  <%= form.text_field :monto_objetivo, class: 'form-control', placeholder: 'Monto Objetivo', style: 'width: 110%;' %>
+                  <% if @campania.errors[:monto_objetivo].any? %>
+                    <div class="error-message">
+                      <%= @campania.errors[:monto_objetivo].first %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="form-group" style="margin-top:4%;">
+                  <%= form.submit 'Guardar Campaña', class: 'btn btn-primary', class: 'btn btn-primary', style: 'background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;' %>
+                </div>
+              </div>
+            <% end %>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# <%= link_to 'Volver', vista_veterinario_path, class: 'btn btn-secondary' %>
+   <a class="btn btn-primary btn-volver d-print-none " href="/vista_veterinario"
+      style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+      Volver
+      <i class="material-icons" style="margin-left:15px;">undo</i>
+    </a>
+<% end %>
+

@@ -1,0 +1,68 @@
+<!--
+  Esta vista la ve solamente el Veterinario
+  Muestra toda la informacion del usuario que elije
+-->
+
+
+<% content_for :body do %>
+
+<% if @persona.present? %>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="card" style="border-radius: 0; position: relative; margin-top:90px;">
+          <div class="card-content">
+            <div class="row">
+              <div class="col-md-3 text-center mt-3">
+                <img src="/assets/user.png" alt="Imagen de usuario" class="img-fluid rounded-circle" style="max-width: 100px; margin-top: 10px;">
+              </div>
+              <div class="col-md-6">
+                <h5 style="font-size:1.30rem; line-height: 110%; margin: .82rem 0 .656rem 0; color: #333"> 
+                <%= @persona.nombre %> <%= @persona.apellido %>
+                </h5>
+                <hr class="my-4">
+                <div class="profile-details">
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">contacts</i>
+                    <strong>DNI:</strong> <%= @persona.dni %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">call</i>
+                    <strong>Teléfono:</strong> <%= @persona.telefono %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">email</i>
+                    <strong>Email:</strong> <%= @persona.user.email %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">contacts</i>
+                    <strong>Nacimiento:</strong> <%= @persona.nacimiento.strftime("%d de %B de %Y") %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">pets</i>
+                   <strong>Cantidad de perros:</strong> <%= @persona.perros.count %>
+                  </div>
+                  <div class="detail">
+                    <i class="material-icons extraextrasmall">payments</i>
+                    <strong>Donante:</strong> <%= @persona.donante ? 'Sí' : 'No' %>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% end %>
+
+<a class="btn btn-primary btn-volver" href="/personas"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+<% end %>

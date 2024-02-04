@@ -1,0 +1,20 @@
+<!--
+  Esto es la barra superior que se ve en todas las vistas
+  tiene el boton de iniciar y cerrar sesion
+-->
+
+
+<nav class="navbar navbar-light bg-light navbar-custom fixed-top d-print-none">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center">
+            <a href="<%= root_path %>">
+                <img src="<%= asset_path('logoDerechaSinFondo.png') %>" alt="Imagen" style="max-width: 150px; height: auto; margin-left: 4px;" class="d-inline-block align-text-top">
+            </a>
+        </div>  
+        <% if current_user %>
+            <%= button_to raw("CERRAR<br>SESIÓN"), destroy_user_session_path, method: :delete, class: "nav-text", style: "background-color: transparent; border:none; text-decoration: underline;" %></li>
+        <% else %>
+            <%= link_to raw("INICIAR<br>SESIÓN"), new_user_session_path, class: "nav-text" %>
+        <% end %>
+    </div>
+</nav>

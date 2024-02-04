@@ -1,0 +1,95 @@
+<!--
+  Esto es la vista de la creacion de turno de urgencia,
+  se ve solo en la vista del veterinario
+-->
+
+<% content_for :titulo do %>
+  <br>
+  <div style="display: flex; align-items: center; margin-top: 40px; margin-left: 50px;">
+    <i class="material-icons small left grey" style="margin-right: 10px;">today</i>
+    <h2 style="margin-top: 4px; font-weight: 200; margin-right: 10px;">Subir un turno de Urgencia</h2>  
+  </div>
+<% end %>
+
+<% content_for :body do %>
+
+<script>
+    console.log('LCDTH')
+  document.addEventListener('DOMContentLoaded', function () {
+    const personaSelect = document.getElementById('persona_select');
+    const perroSelect = document.getElementById('perro_select');
+
+    personaSelect.addEventListener('change', function () {
+      const personaId = this.value;
+
+      // Realiza una petición AJAX para obtener los perros relacionados a la persona seleccionada
+      fetch(`/get_perros_by_persona?persona_id=${personaId}`)
+        .then(response => response.json())
+        .then(data => {
+          // Limpia y actualiza el segundo desplegable con los perros obtenidos
+          perroSelect.innerHTML = '<option value="">¿Para qué perro es?</option>';
+          data.forEach(perro => {
+            const option = document.createElement('option');
+            option.value = perro.id;
+            option.text = perro.nombre;
+            perroSelect.add(option);
+          });
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  });
+</script>
+
+    <div class="container">
+        <div class="row justify-content-left">
+            <div class="col-md-7">
+                <div class="card" style="border-radius:0; margin-left:40px;">
+                    <div class="card-content">
+                        <%= form_with(model: @turno, url: turnos_subirUrgencia_path ,local: true) do |form| %>
+                            
+                            <%= form.collection_select(:persona_id, @personas, :id, :nombre, { prompt: '¿Para quién es el turno?' }, { class: 'custom-select-collection', style: 'margin-left:21%', id: 'persona_select'}) %>
+
+                            <%= form.grouped_collection_select(:perro_id, [], :perros, :nombre, :id, :nombre_con_dueno, { prompt: '¿Para qué perro es?' }, { class: 'custom-select-collection', style: 'margin-left:21%', id: 'perro_select' }) %> 
+
+                            <%= form.collection_select(:tipo_turno_id, TipoTurno.where(nombre: 'Urgencia'), :id, :nombre, { prompt: 'Turno de Urgencia' }, { class: 'custom-select-collection', style: 'margin-left:21%', disabled: true }) %>
+                            <%= form.hidden_field :tipo_turno_id, value: TipoTurno.find_by(nombre: 'Urgencia').id %>
+
+                            <%= form.date_field :dia, value: Date.today.strftime('%Y-%m-%d'), class: 'custom-select-collection', style: 'margin-left:21%; margin-top:3%;', readonly: true %>
+                            <%= form.hidden_field :dia, value: Date.today %>
+
+                            <% if @turno && @turno.errors.has_key?(:dia) %>
+                                <div class="alert alert-danger" style="width: 300px;">
+                                <% error_messages = @turno.errors[:dia] %>
+                                <% error_messages.each do |error_message| %>
+                                    <%= error_message %><br>
+                                <% end %>
+                                </div>
+                            <% end %>
+
+                            <%= form.hidden_field :franja_horaria, value: 'am' %>
+                            <div class="actions justify-content-center align-items-center" style="margin-left:35%;" >
+                                <%= form.submit 'Guardar' , class: 'btn btn-primary', style: 'background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 50%; height: 35px; letter-spacing: 0.5px; color: white;'%>
+                            </div>
+
+                        <% end %>
+
+                        <% if @turno && @turno.errors.has_key?(:base) %>
+                            <div class="alert alert-danger" style="width: 300px;">
+                            <% error_messages = @turno.errors[:base] %>
+                            <% error_messages.each do |error_message| %>
+                                <%= error_message %><br>
+                            <% end %>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-primary btn-volver" href="/turnos"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+        Volver
+        <i class="material-icons" style="margin-left:15px;">undo</i>
+    </a>
+<% end %>

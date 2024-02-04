@@ -1,0 +1,60 @@
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center;  margin-top: 70px; margin-left:50px;">
+    <i class="material-icons extrasmall left grey" style="margin-right: 10px; vertical-align: middle;">edit</i>
+    <h2 style="margin-top: 4px; font-weight: 200; vertical-align: middle;">Cambiar contraseña</h2>
+  </div>
+<% end %>
+
+
+<% content_for :body do %>
+ <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="card" style="border-radius:0;">
+          <div class="card-content">
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+              <%= render "devise/shared/error_messages", resource: resource %>
+
+              <div class="field" style="margin-left:100px; margin-bottom:30px;">
+                <%= f.label :password %> <i><br />
+                <%= f.password_field :password, autocomplete: "new-password" %>
+                <% if @minimum_password_length %>
+                  <br />
+                  <em><%= @minimum_password_length %> characters minimum</em>
+                <% end %>
+              </div>
+
+              <div class="field" style="margin-left:100px; margin-bottom:30px;">
+                <%= f.label :password_confirmation %><br />
+                <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+
+                <% if @password_confirmation_error.present? %>
+                  <p class="error-message"><%= @password_confirmation_error %></p>
+                <% end %>
+              </div>
+
+              <div class="field" style="margin-left:100px; margin-bottom:30px;">
+                <%= f.label :current_password %> <i>(Necesitamos tu contraseña vieja para actualizar los datos)</i><br />
+                <%= f.password_field :current_password, autocomplete: "current-password" %>
+              </div>
+
+              <br>
+              <div class="actions" style="margin-left:100px">
+                <%= f.submit "Guardar", class: 'btn btn-primary', style: 'background-color: rgb(252, 145, 14); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <%= link_to "Volver", :back, class: "btn btn-primary bt-volver", style: "margin-left:20px; background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center" %>
+
+<% end %>
+
+ <%# <h3>Cancel my account</h3>
+
+  <div>
+    Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %>
+  <%# </div> %>

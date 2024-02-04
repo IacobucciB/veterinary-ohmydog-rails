@@ -1,0 +1,69 @@
+<!--
+  Esta vista la tiene el cliente
+  Es el formulario para hacer una publicación de un perro en adopción
+-->
+
+<% content_for :titulo do %>
+  <div style="display: flex; align-items: center; margin-top:10%;" >
+    <i class="material-icons medium left grey" style="margin-right: 10px;">person</i>
+    <h2 style="margin-top: 4px; font-weight: 200;"> Publicar un perro </h2>
+  </div>
+<% end %> 
+
+<% content_for :body do %>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card" style="border-radius:0;">
+          <div class="card-content">
+    
+            <%= form_with(model: @adopcion, url: adopciones_post_publicacion_new_path, local: true) do |f| %>
+
+                <div class="d-flex justify-content-center align-items-center" style="margin-top: 1%;">
+                    <div class="field" style="margin-right:4%;">
+                    <%= f.collection_select :tipo_raza_id, TipoRaza.all, :id, :nombre, prompt: "Raza" %> 
+                    </div>
+
+                    <div class="field" >
+                        <%= f.collection_select(:sexo, Adopcion.sexos.keys, :to_s, :humanize, prompt: "Sexo") %>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-center align-items-center" style="margin-top:4%;">
+                    <div class="field" style="margin-right:30px;">
+                        <%= f.label :origen %>
+                        <%= f.text_field :origen, placeholder: 'Origen', class: 'form-control' %>
+                    </div>
+
+                    <div class="field">
+                        <%= f.label :tamaño %><br>
+                        <%= f.collection_select(:tamanio, Adopcion.tamanios.keys, :to_s, :humanize, prompt: "Tamaño") %>
+                    </div>
+                </div>
+
+                <%= f.hidden_field :persona_id, value: current_user.persona.id %>
+
+               
+
+                <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                    <div class="actions">
+                    <%= f.submit 'Publicar Perro', class: 'btn btn-primary', style: 'background-color: rgb(252, 145, 14); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;' %>
+                    </div>
+                </div>
+                <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="btn btn-primary btn-volver" href="/adopciones"
+    style="background-color: rgb(252, 145, 14);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+  
+<% end %>
+

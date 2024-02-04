@@ -1,0 +1,86 @@
+<!--
+  Esto es la vista de turnos pendientes de confirmacion del veterinario
+  se accede por el sidebar de la vista del veterinario
+-->
+
+<% content_for :titulo do %>
+  <br>
+  <div style="display: flex; align-items: center; margin-top:40px;" >
+    <i class="material-icons small left grey" style="margin-right: 10px;">pending_actions</i>
+    <h2 style="margin-top: 4px; font-weight: 200;"> Turnos Pendientes de Confirmación </h2>
+  </div>
+<% end %> 
+
+<% content_for :titulo_acciones do %>
+  <a class="btn btn-primary anchor-new-celeste" href="/turnos/subirUrgencia" style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:100%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; margin-top:23%; justify-content: center">
+    Turno de Urgencia
+    <i class="material-icons" style="margin-left:15px;">add</i>
+    <i class="material-icons" style="margin-left:15px;">today</i>
+  </a>
+  <br>
+<% end %>
+
+<% content_for :body do %>
+  <% if @turnos.any? %>
+    <div class="card" style="border-radius:0;">
+      <div class="card-content">
+        <table class="table" style="display: table; border-collapse: separate; border-spacing: 0; position: relative; width:100%;">
+          <thead>
+            <tr>
+              <th scope="col">Día</th>
+              <th scope="col">Hora</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Perro</th>
+              <th scope="col">Dueño</th>
+              <th scope="col">Tipo de Turno</th>
+              <th scope="col">Confirmación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @turnos.each_with_index do |turno, index| %>
+            <%# <% @turnos.select { |turno| turno.estado.downcase == 'pendiente' }.each_with_index do |turno, index| %> 
+              <tr>
+                <td><%= turno.dia.strftime("%d/%m/%Y") %></td>
+                <td><%= turno.franja_horaria %></td>
+                <td><%= turno.estado.capitalize %></td>
+                <td> - </td>
+                <td><%= turno.perro.nombre %></td>
+                <td><%= "#{turno.perro.persona.nombre} #{turno.perro.persona.apellido}" %></td>
+                <td><%= turno.tipo_turno.nombre %></td>
+                <td>
+                  <% if (turno.dia >= Date.today) %>
+                    <%= link_to 'Aceptar', aceptar_turno_path(turno.id), class: 'btn btn-success' %>
+                    <%= link_to 'Rechazar', rechazar_turno_path(turno.id) , class: 'btn btn-danger' %>
+                  <% else %>
+                    -
+                  <% end %>
+                </td>
+              <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="card" style="border-radius: 0; position: relative; min-height: 100px;">
+            <div class="card-content" style="position: relative; margin-bottom: 0;">
+              <h4 class="mt-3">No hay turnos en espera de confirmación.</h4>
+              <img src="<%= asset_path('perritoSaludando.png') %>" alt="Imagen" style="position: absolute; top: -36px; right: 20px; max-width: 23%; height: auto;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <br>
+  <a class="btn btn-primary btn-volver" href="/homeVeterinario"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+<% end %>

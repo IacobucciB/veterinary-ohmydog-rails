@@ -1,0 +1,119 @@
+<!--
+  Esto es la vista del veterinario para registar clientes
+  contiene el boton de registar clientes
+-->
+
+<% content_for :titulo do %>
+ <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+  <i class="material-icons medium left grey" style="margin-right: 10px;">person_add</i>
+  <h2 style="margin-top: 4px; font-weight: 200;">Registrar un Cliente</h2>
+</div>
+
+<% end %>
+
+<% content_for :body do %>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-11">
+        <div class="card" style="border-radius:0;">
+          <div class="card-content">
+
+            <%= form_tag({ controller: 'personas', action: 'create_user_and_persona' }, method: 'post') do %>
+              <br>
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="field">
+                  <%= text_field_tag :email, params[:email], id: 'email_field', placeholder: 'Email', class: 'form-control', size: '35'  %>
+                  <% if @usuario && @usuario.errors.has_key?(:email) %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <% error_messages = @usuario.errors[:email] %>
+                      <% error_messages.reject! { |message| message == "has already been taken" } %>
+                      <% error_messages.each do |error_message| %>
+                        <%= error_message %><br>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+                
+                <div class="field">
+                    <%= date_field_tag :nacimiento, params[:nacimiento], id: 'nacimiento_field', placeholder: 'Fecha de nacimiento', class: 'form-control', style: 'width:360px; margin-left:7%;'  %>
+                    <% if @persona && @persona.errors.has_key?(:nacimiento) %>
+                      <div class="alert alert-danger" style="width: 300px; margin-left:7%;">
+                        <% @persona.errors[:nacimiento].each do |error_message| %>
+                          <%= error_message %><br>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+              <br><br>
+              <div class="d-flex justify-content-center align-items-center" style="margin-top:25px;">
+                <div class="field" style="margin-right:30px;">
+                  <%= text_field_tag :nombre, params[:nombre], placeholder: 'Nombres', class: 'form-control', size: '35' %>
+                  <% if @persona && @persona.errors.has_key?(:nombre) %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <% @persona.errors[:nombre].each do |error_message| %>
+                        <%= error_message %><br>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="field">
+                  <%= text_field_tag :apellido, params[:apellido], placeholder: 'Apellidos', class: 'form-control', size: '35'  %>
+                  <% if @persona && @persona.errors.has_key?(:apellido) %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <% @persona.errors[:apellido].each do |error_message| %>
+                        <%= error_message %><br>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-center align-items-center" style="margin-top:50px;">
+                <div class="field" style="margin-right:30px;">
+                  <%= text_field_tag :dni, params[:dni], placeholder: 'D.N.I', class: 'form-control', size: '35'  %>
+                  <% if @persona && @persona.errors.has_key?(:dni) %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <% @persona.errors[:dni].each do |error_message| %>
+                        <%= error_message %><br>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="field">
+                  <%= number_field_tag :telefono, nil, id: 'telefono_field', placeholder: 'Teléfono' , class: 'form-control', size: '50', style: 'width:367px;' %>
+                  <% if @persona && @persona.errors.has_key?(:telefono) %>
+                    <div class="alert alert-danger" style="width: 300px;">
+                      <% @persona.errors[:telefono].each do |error_message| %>
+                        <%= error_message %><br>
+                      <% end %>
+                    </div>      
+                  <% end %>
+                </div>
+              </div>
+                
+              <div class="d-flex justify-content-center align-items-center" style="min-height: 100px;">
+                <div class="actions">
+                  <%= submit_tag 'Registrar Usuario', class: 'btn btn-primary', style: 'background-color: rgb(28, 150, 174); border: none; border-radius: 2px; width: 200px; height: 35px; letter-spacing: 0.5px; color: white;' %>
+                </div>
+              </div>
+
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="btn btn-primary btn-volver" href="/personas"
+    style="background-color: rgb(28, 150, 174);border: none; border-radius:2px; width:10%; letter-spacing:.5px; vertical-align:center;display: flex; align-items: center; justify-content: center">
+    Volver
+    <i class="material-icons" style="margin-left:15px;">undo</i>
+  </a>
+
+<% end %>
