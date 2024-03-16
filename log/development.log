@@ -9704,3 +9704,1126 @@ Migrating to AddIsLostToPerros (20231212185608)
   [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
   ↳ app/models/turno.rb:44:in `edad_minima_castracion'
   [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP DATABASE IF EXISTS "veterinaria_ohmydog_development"[0m
+  [1m[35m (40.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "veterinaria_ohmydog_test"[0m
+  [1m[35m (102.8ms)[0m  [1m[35mCREATE DATABASE "veterinaria_ohmydog_development" ENCODING = 'unicode'[0m
+  [1m[35m (104.7ms)[0m  [1m[35mCREATE DATABASE "veterinaria_ohmydog_test" ENCODING = 'unicode'[0m
+  [1m[35m (11.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (12.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5930527762587385755)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20231029185825)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp(6), "remember_created_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231029185825"]]
+  [1m[36mTRANSACTION (4.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePersonas (20231029203918)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (14.4ms)[0m  [1m[35mCREATE TABLE "personas" ("id" bigserial primary key, "nombre" character varying NOT NULL, "apellido" character varying, "dni" integer, "telefono" integer, "nacimiento" date, "donante" boolean, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_personas_on_dni" ON "personas" ("dni")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231029203918"]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePerros (20231029205547)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (15.0ms)[0m  [1m[35mCREATE TABLE "perros" ("id" bigserial primary key, "nombre" character varying, "edad" integer, "raza" character varying, "color" character varying, "descripcion" character varying, "antecedentes" character varying, "foto" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231029205547"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTurnos (20231029210328)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (11.2ms)[0m  [1m[35mCREATE TABLE "turnos" ("id" bigserial primary key, "nombre" character varying, "dia" date, "franja_horaria" character varying, "estado" character varying, "monto" float, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231029210328"]]
+  [1m[36mTRANSACTION (3.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePerdidoencontrados (20231029210347)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.3ms)[0m  [1m[35mCREATE TABLE "perdidoencontrados" ("id" bigserial primary key, "tipo" character varying, "foto" character varying, "zona" character varying, "dia" timestamp(6), "observacion" character varying, "estado" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231029210347"]]
+  [1m[36mTRANSACTION (2.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateAdopcions (20231029210402)
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.1ms)[0m  [1m[35mCREATE TABLE "adopcions" ("id" bigserial primary key, "tamanio" integer, "sexo" integer, "origen" character varying, "estado" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231029210402"]]
+  [1m[36mTRANSACTION (4.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPersonaToPerros (20231030225931)
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "perros" ADD "persona_id" bigint NOT NULL[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE INDEX "index_perros_on_persona_id" ON "perros" ("persona_id")[0m
+  [1m[35m (2.4ms)[0m  [1m[35mALTER TABLE "perros" ADD CONSTRAINT "fk_rails_e4ce0a8ca3"
+FOREIGN KEY ("persona_id")
+  REFERENCES "personas" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231030225931"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUserToPerson (20231106155751)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.3ms)[0m  [1m[35mALTER TABLE "personas" ADD "user_id" bigint NOT NULL[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE INDEX "index_personas_on_user_id" ON "personas" ("user_id")[0m
+  [1m[35m (2.5ms)[0m  [1m[35mALTER TABLE "personas" ADD CONSTRAINT "fk_rails_ff69b46a04"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231106155751"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddRoleToUsers (20231106160403)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "users" ADD "role" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231106160403"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPerroToTurno (20231109185953)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "turnos" ADD "perro_id" bigint NOT NULL[0m
+  [1m[35m (5.6ms)[0m  [1m[35mCREATE INDEX "index_turnos_on_perro_id" ON "turnos" ("perro_id")[0m
+  [1m[35m (3.0ms)[0m  [1m[35mALTER TABLE "turnos" ADD CONSTRAINT "fk_rails_94956b11c0"
+FOREIGN KEY ("perro_id")
+  REFERENCES "perros" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231109185953"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ChangeFranjaHorariaDataTypeInTurnos (20231109190630)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (18.4ms)[0m  [1m[35mALTER TABLE "turnos" ALTER COLUMN "franja_horaria" TYPE integer USING franja_horaria::integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231109190630"]]
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ChangeEstadoDataTypeInTurnos (20231109201842)
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (17.2ms)[0m  [1m[35mALTER TABLE "turnos" ALTER COLUMN "estado" TYPE integer USING estado::integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231109201842"]]
+  [1m[36mTRANSACTION (2.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTipoTurnos (20231110202352)
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (13.6ms)[0m  [1m[35mCREATE TABLE "tipo_turnos" ("id" bigserial primary key, "nombre" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231110202352"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTipoTurnoToTurno (20231110203604)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "turnos" ADD "tipo_turno_id" bigint NOT NULL[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE INDEX "index_turnos_on_tipo_turno_id" ON "turnos" ("tipo_turno_id")[0m
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "turnos" ADD CONSTRAINT "fk_rails_823c8b29cf"
+FOREIGN KEY ("tipo_turno_id")
+  REFERENCES "tipo_turnos" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231110203604"]]
+  [1m[36mTRANSACTION (4.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveNombreFromTurnos (20231110204656)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "turnos" DROP COLUMN "nombre"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231110204656"]]
+  [1m[36mTRANSACTION (2.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTipoRazas (20231110210705)
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (15.3ms)[0m  [1m[35mCREATE TABLE "tipo_razas" ("id" bigserial primary key, "nombre" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231110210705"]]
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTipoRazaToPerro (20231110210943)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "perros" ADD "tipo_raza_id" bigint NOT NULL[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE INDEX "index_perros_on_tipo_raza_id" ON "perros" ("tipo_raza_id")[0m
+  [1m[35m (3.0ms)[0m  [1m[35mALTER TABLE "perros" ADD CONSTRAINT "fk_rails_f4fb211244"
+FOREIGN KEY ("tipo_raza_id")
+  REFERENCES "tipo_razas" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231110210943"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveRazaFromPerros (20231110212030)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "perros" DROP COLUMN "raza"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231110212030"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ChangeTelefonoDataTypeToBigint (20231110214352)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (21.4ms)[0m  [1m[35mALTER TABLE "personas" ALTER COLUMN "telefono" TYPE bigint[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231110214352"]]
+  [1m[36mTRANSACTION (2.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddNuevoCampoToPerros (20231112182821)
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.9ms)[0m  [1m[35mALTER TABLE "perros" ADD "sexo" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231112182821"]]
+  [1m[36mTRANSACTION (2.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateActiveStorageTables (20231114214450)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.5ms)[0m  [1m[35mCREATE TABLE "active_storage_blobs" ("id" bigserial primary key, "key" character varying NOT NULL, "filename" character varying NOT NULL, "content_type" character varying, "metadata" text, "service_name" character varying NOT NULL, "byte_size" bigint NOT NULL, "checksum" character varying, "created_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (5.7ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_blobs_on_key" ON "active_storage_blobs" ("key")[0m
+  [1m[35m (7.0ms)[0m  [1m[35mCREATE TABLE "active_storage_attachments" ("id" bigserial primary key, "name" character varying NOT NULL, "record_type" character varying NOT NULL, "record_id" bigint NOT NULL, "blob_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c3b3935057"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+)[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE INDEX "index_active_storage_attachments_on_blob_id" ON "active_storage_attachments" ("blob_id")[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_attachments_uniqueness" ON "active_storage_attachments" ("record_type", "record_id", "name", "blob_id")[0m
+  [1m[35m (10.6ms)[0m  [1m[35mCREATE TABLE "active_storage_variant_records" ("id" bigserial primary key, "blob_id" bigint NOT NULL, "variation_digest" character varying NOT NULL, CONSTRAINT "fk_rails_993965df05"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+)[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231114214450"]]
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveFotoFromPerros (20231114225546)
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "perros" DROP COLUMN "foto"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231114225546"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ChangeDniToBigintInPersonas (20231115003906)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (21.4ms)[0m  [1m[35mALTER TABLE "personas" ALTER COLUMN "dni" TYPE bigint[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231115003906"]]
+  [1m[36mTRANSACTION (57.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIsActiveToUsers (20231120172040)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "users" ADD "is_active" boolean DEFAULT TRUE[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231120172040"]]
+  [1m[36mTRANSACTION (55.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddFieldsToTipoTurnos (20231125150207)
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.4ms)[0m  [1m[35mALTER TABLE "turnos" ADD "dosis" integer[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "turnos" ADD "descripcion" character varying[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "turnos" ADD "peso" integer[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231125150207"]]
+  [1m[36mTRANSACTION (3.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCampaniaDonacions (20231125192018)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (10.3ms)[0m  [1m[35mCREATE TABLE "campania_donacions" ("id" bigserial primary key, "nombre" character varying, "descripcion" character varying, "fecha_final" timestamp(6), "monto_actual" decimal(10,2), "monto_objetivo" decimal(10,2), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231125192018"]]
+  [1m[36mTRANSACTION (4.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIsActiveToPerros (20231127223841)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.5ms)[0m  [1m[35mALTER TABLE "perros" ADD "is_active" boolean DEFAULT TRUE[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231127223841"]]
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateTarjetaCreditos (20231203051135)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (13.3ms)[0m  [1m[35mCREATE TABLE "tarjeta_creditos" ("id" bigserial primary key, "numero" character varying, "nombre" character varying, "fecha_vencimiento" date, "codigo_seguridad" integer, "saldo" decimal, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231203051135"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPersonaToAdopciones (20231204224820)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "adopcions" ADD "persona_id" bigint NOT NULL[0m
+  [1m[35m (7.7ms)[0m  [1m[35mCREATE INDEX "index_adopcions_on_persona_id" ON "adopcions" ("persona_id")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE "adopcions" ADD CONSTRAINT "fk_rails_f7a9965925"
+FOREIGN KEY ("persona_id")
+  REFERENCES "personas" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231204224820"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTipoRazaToAdopcions (20231205002940)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "adopcions" ADD "tipo_raza_id" bigint NOT NULL[0m
+  [1m[35m (4.2ms)[0m  [1m[35mCREATE INDEX "index_adopcions_on_tipo_raza_id" ON "adopcions" ("tipo_raza_id")[0m
+  [1m[35m (2.2ms)[0m  [1m[35mALTER TABLE "adopcions" ADD CONSTRAINT "fk_rails_bf269be027"
+FOREIGN KEY ("tipo_raza_id")
+  REFERENCES "tipo_razas" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231205002940"]]
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePlazas (20231208152715)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (8.5ms)[0m  [1m[35mCREATE TABLE "plazas" ("id" bigserial primary key, "nombre" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231208152715"]]
+  [1m[36mTRANSACTION (3.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePaseadors (20231208152857)
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (12.1ms)[0m  [1m[35mCREATE TABLE "paseadors" ("id" bigserial primary key, "name" character varying, "service_type" integer, "email" character varying, "location" character varying, "plaza_id" bigint, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_45794ad7d6"
+FOREIGN KEY ("plaza_id")
+  REFERENCES "plazas" ("id")
+)[0m
+  [1m[35m (4.4ms)[0m  [1m[35mCREATE INDEX "index_paseadors_on_plaza_id" ON "paseadors" ("plaza_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231208152857"]]
+  [1m[36mTRANSACTION (3.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePerdidoEncontrados (20231211012711)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (9.9ms)[0m  [1m[35mCREATE TABLE "perdido_encontrados" ("id" bigserial primary key, "zona" character varying, "dia" date, "observacion" character varying, "estado" integer, "tipo" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231211012711"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddPerroToPerdidoEncontrados (20231211182733)
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.4ms)[0m  [1m[35mALTER TABLE "perdido_encontrados" ADD "perro_id" bigint NOT NULL[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE INDEX "index_perdido_encontrados_on_perro_id" ON "perdido_encontrados" ("perro_id")[0m
+  [1m[35m (2.1ms)[0m  [1m[35mALTER TABLE "perdido_encontrados" ADD CONSTRAINT "fk_rails_647e142336"
+FOREIGN KEY ("perro_id")
+  REFERENCES "perros" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231211182733"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateEncontrados (20231211204716)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (15.6ms)[0m  [1m[35mCREATE TABLE "encontrados" ("id" bigserial primary key, "estado" integer, "lugar" character varying, "dia" date, "descripcion" text, "color" character varying, "tamanio" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231211204716"]]
+  [1m[36mTRANSACTION (2.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddHoraToTurnos (20231212002937)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "turnos" ADD "hora" time[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231212002937"]]
+  [1m[36mTRANSACTION (2.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUserIdToEncontrados (20231212184643)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.9ms)[0m  [1m[35mALTER TABLE "encontrados" ADD "user_id" bigint[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE INDEX "index_encontrados_on_user_id" ON "encontrados" ("user_id")[0m
+  [1m[35m (1.6ms)[0m  [1m[35mALTER TABLE "encontrados" ADD CONSTRAINT "fk_rails_df84c6c6ae"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231212184643"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddIsLostToPerros (20231212185608)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "perros" ADD "is_lost" boolean DEFAULT FALSE[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231212185608"]]
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2024-03-16 19:57:43.312649"], ["updated_at", "2024-03-16 19:57:43.312649"]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT pg_advisory_unlock(5930527762587385755)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mTurno Load (0.9ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos"[0m
+  [1m[36mTipoTurno Load (0.8ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos"[0m
+  [1m[36mPerro Load (1.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros"[0m
+  [1m[36mPersona Load (1.1ms)[0m  [1m[34mSELECT "personas".* FROM "personas"[0m
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mPaseador Load (1.0ms)[0m  [1m[34mSELECT "paseadors".* FROM "paseadors"[0m
+  [1m[36mPlaza Load (1.0ms)[0m  [1m[34mSELECT "plazas".* FROM "plazas"[0m
+  [1m[36mCampaniaDonacion Load (0.9ms)[0m  [1m[34mSELECT "campania_donacions".* FROM "campania_donacions"[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "ohmydog_veterinaria@gmail.com"], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "ohmydog_veterinaria@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (1.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "role", "is_active") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["email", "ohmydog_veterinaria@gmail.com"], ["encrypted_password", "[FILTERED]"], ["reset_password_token", "[FILTERED]"], ["reset_password_sent_at", "[FILTERED]"], ["remember_created_at", nil], ["created_at", "2024-03-16 19:57:44.057634"], ["updated_at", "2024-03-16 19:57:44.057634"], ["role", 1], ["is_active", true]]
+  [1m[36mTRANSACTION (2.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "johndoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "johndoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "role", "is_active") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["email", "johndoe@gmail.com"], ["encrypted_password", "[FILTERED]"], ["reset_password_token", "[FILTERED]"], ["reset_password_sent_at", "[FILTERED]"], ["remember_created_at", nil], ["created_at", "2024-03-16 19:57:44.309516"], ["updated_at", "2024-03-16 19:57:44.309516"], ["role", 0], ["is_active", true]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "mirtha@gmail.com"], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "mirtha@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "role", "is_active") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["email", "mirtha@gmail.com"], ["encrypted_password", "[FILTERED]"], ["reset_password_token", "[FILTERED]"], ["reset_password_sent_at", "[FILTERED]"], ["remember_created_at", nil], ["created_at", "2024-03-16 19:57:44.567242"], ["updated_at", "2024-03-16 19:57:44.567242"], ["role", 0], ["is_active", true]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", ""], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "luna@gmail.com"], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "luna@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "role", "is_active") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["email", "luna@gmail.com"], ["encrypted_password", "[FILTERED]"], ["reset_password_token", "[FILTERED]"], ["reset_password_sent_at", "[FILTERED]"], ["remember_created_at", nil], ["created_at", "2024-03-16 19:57:44.823048"], ["updated_at", "2024-03-16 19:57:44.823048"], ["role", 0], ["is_active", true]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "personas" WHERE "personas"."dni" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPersona Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "personas" WHERE "personas"."dni" = $1 LIMIT $2[0m  [["dni", 1111], ["LIMIT", 1]]
+  [1m[36mPersona Create (1.6ms)[0m  [1m[32mINSERT INTO "personas" ("nombre", "apellido", "dni", "telefono", "nacimiento", "donante", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["nombre", "Pedro"], ["apellido", "Meza"], ["dni", 1111], ["telefono", 221444], ["nacimiento", "1995-05-15"], ["donante", true], ["created_at", "2024-03-16 19:57:44.893232"], ["updated_at", "2024-03-16 19:57:44.893232"], ["user_id", 1]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "personas" WHERE "personas"."dni" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mPersona Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "personas" WHERE "personas"."dni" = $1 LIMIT $2[0m  [["dni", 2222], ["LIMIT", 1]]
+  [1m[36mPersona Create (0.6ms)[0m  [1m[32mINSERT INTO "personas" ("nombre", "apellido", "dni", "telefono", "nacimiento", "donante", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["nombre", "John"], ["apellido", "Doe"], ["dni", 2222], ["telefono", 221555], ["nacimiento", "2000-05-15"], ["donante", false], ["created_at", "2024-03-16 19:57:44.914079"], ["updated_at", "2024-03-16 19:57:44.914079"], ["user_id", 2]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "personas" WHERE "personas"."dni" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mPersona Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "personas" WHERE "personas"."dni" = $1 LIMIT $2[0m  [["dni", 111112], ["LIMIT", 1]]
+  [1m[36mPersona Create (0.9ms)[0m  [1m[32mINSERT INTO "personas" ("nombre", "apellido", "dni", "telefono", "nacimiento", "donante", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["nombre", "Mirtha"], ["apellido", "Mezasa"], ["dni", 111112], ["telefono", 221444], ["nacimiento", "1995-05-15"], ["donante", true], ["created_at", "2024-03-16 19:57:44.935868"], ["updated_at", "2024-03-16 19:57:44.935868"], ["user_id", 3]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "personas" WHERE "personas"."dni" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mPersona Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "personas" WHERE "personas"."dni" = $1 LIMIT $2[0m  [["dni", 41881372], ["LIMIT", 1]]
+  [1m[36mPersona Create (0.7ms)[0m  [1m[32mINSERT INTO "personas" ("nombre", "apellido", "dni", "telefono", "nacimiento", "donante", "created_at", "updated_at", "user_id") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"[0m  [["nombre", "Luna"], ["apellido", "Cuervo"], ["dni", 41881372], ["telefono", 2214810392], ["nacimiento", "1999-09-08"], ["donante", false], ["created_at", "2024-03-16 19:57:44.956880"], ["updated_at", "2024-03-16 19:57:44.956880"], ["user_id", 4]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.9ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:44.973268"], ["updated_at", "2024-03-16 19:57:44.973268"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (1.0ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Mestizo"], ["updated_at", "2024-03-16 19:57:44.983499"], ["id", 1]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:44.993000"], ["updated_at", "2024-03-16 19:57:44.993000"]]
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.7ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Labrador Retriever"], ["updated_at", "2024-03-16 19:57:44.999655"], ["id", 2]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.7ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.013181"], ["updated_at", "2024-03-16 19:57:45.013181"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.7ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Pastor Alemán"], ["updated_at", "2024-03-16 19:57:45.022383"], ["id", 3]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.029470"], ["updated_at", "2024-03-16 19:57:45.029470"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Golden Retriever"], ["updated_at", "2024-03-16 19:57:45.037575"], ["id", 4]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.045327"], ["updated_at", "2024-03-16 19:57:45.045327"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Bulldog Francés"], ["updated_at", "2024-03-16 19:57:45.052257"], ["id", 5]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.059712"], ["updated_at", "2024-03-16 19:57:45.059712"]]
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Bulldog"], ["updated_at", "2024-03-16 19:57:45.066241"], ["id", 6]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.073421"], ["updated_at", "2024-03-16 19:57:45.073421"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Caniche"], ["updated_at", "2024-03-16 19:57:45.081372"], ["id", 7]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.087959"], ["updated_at", "2024-03-16 19:57:45.087959"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Beagle"], ["updated_at", "2024-03-16 19:57:45.094697"], ["id", 8]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.101205"], ["updated_at", "2024-03-16 19:57:45.101205"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.6ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Rottweiler"], ["updated_at", "2024-03-16 19:57:45.107504"], ["id", 9]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.114262"], ["updated_at", "2024-03-16 19:57:45.114262"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.6ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Yorkshire Terrier"], ["updated_at", "2024-03-16 19:57:45.120534"], ["id", 10]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.127515"], ["updated_at", "2024-03-16 19:57:45.127515"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Teckel"], ["updated_at", "2024-03-16 19:57:45.133831"], ["id", 11]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.140781"], ["updated_at", "2024-03-16 19:57:45.140781"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Husky Siberiano"], ["updated_at", "2024-03-16 19:57:45.148176"], ["id", 12]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.156923"], ["updated_at", "2024-03-16 19:57:45.156923"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.6ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Boxer"], ["updated_at", "2024-03-16 19:57:45.164642"], ["id", 13]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.174139"], ["updated_at", "2024-03-16 19:57:45.174139"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.7ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Labrador"], ["updated_at", "2024-03-16 19:57:45.181388"], ["id", 14]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.190274"], ["updated_at", "2024-03-16 19:57:45.190274"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Golden"], ["updated_at", "2024-03-16 19:57:45.198144"], ["id", 15]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.205125"], ["updated_at", "2024-03-16 19:57:45.205125"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.7ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Gran Danés"], ["updated_at", "2024-03-16 19:57:45.213138"], ["id", 16]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.220377"], ["updated_at", "2024-03-16 19:57:45.220377"]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.7ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Chihuahua"], ["updated_at", "2024-03-16 19:57:45.228472"], ["id", 17]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.8ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.235771"], ["updated_at", "2024-03-16 19:57:45.235771"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.6ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Pastor de Shetland"], ["updated_at", "2024-03-16 19:57:45.243462"], ["id", 18]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.8ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.251073"], ["updated_at", "2024-03-16 19:57:45.251073"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Pastor Australiano"], ["updated_at", "2024-03-16 19:57:45.258451"], ["id", 19]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.265718"], ["updated_at", "2024-03-16 19:57:45.265718"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Border Collie"], ["updated_at", "2024-03-16 19:57:45.273001"], ["id", 20]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.8ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.279504"], ["updated_at", "2024-03-16 19:57:45.279504"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.8ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Dálmata"], ["updated_at", "2024-03-16 19:57:45.287204"], ["id", 21]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.7ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.293957"], ["updated_at", "2024-03-16 19:57:45.293957"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Cocker Spaniel"], ["updated_at", "2024-03-16 19:57:45.301048"], ["id", 22]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.307507"], ["updated_at", "2024-03-16 19:57:45.307507"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Schnauzer Miniatura"], ["updated_at", "2024-03-16 19:57:45.314687"], ["id", 23]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.321268"], ["updated_at", "2024-03-16 19:57:45.321268"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Siberiano"], ["updated_at", "2024-03-16 19:57:45.330102"], ["id", 24]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.336639"], ["updated_at", "2024-03-16 19:57:45.336639"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.6ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Boston Terrier"], ["updated_at", "2024-03-16 19:57:45.345586"], ["id", 25]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.8ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.352690"], ["updated_at", "2024-03-16 19:57:45.352690"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Carlino"], ["updated_at", "2024-03-16 19:57:45.360600"], ["id", 26]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.368545"], ["updated_at", "2024-03-16 19:57:45.368545"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.6ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Bulldog Inglés"], ["updated_at", "2024-03-16 19:57:45.375566"], ["id", 27]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.384116"], ["updated_at", "2024-03-16 19:57:45.384116"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.7ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Salchicha"], ["updated_at", "2024-03-16 19:57:45.390867"], ["id", 28]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.398510"], ["updated_at", "2024-03-16 19:57:45.398510"]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "San Bernardo"], ["updated_at", "2024-03-16 19:57:45.406472"], ["id", 29]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.8ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.412995"], ["updated_at", "2024-03-16 19:57:45.412995"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Pomerania"], ["updated_at", "2024-03-16 19:57:45.420249"], ["id", 30]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_razas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.427133"], ["updated_at", "2024-03-16 19:57:45.427133"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoRaza Update (0.5ms)[0m  [1m[33mUPDATE "tipo_razas" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_razas"."id" = $3[0m  [["nombre", "Perro Pastor Australiano"], ["updated_at", "2024-03-16 19:57:45.433720"], ["id", 31]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" IS NULL AND "perros"."persona_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Load (0.4ms)[0m  [1m[34mSELECT "personas".* FROM "personas" WHERE "personas"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTipoRaza Load (0.6ms)[0m  [1m[34mSELECT "tipo_razas".* FROM "tipo_razas" WHERE "tipo_razas"."id" = $1 LIMIT $2[0m  [["id", 31], ["LIMIT", 1]]
+  [1m[36mPerro Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" = $1 AND "perros"."persona_id" = $2 LIMIT $3[0m  [["nombre", "Rex"], ["persona_id", 2], ["LIMIT", 1]]
+  [1m[36mPerro Create (1.8ms)[0m  [1m[32mINSERT INTO "perros" ("nombre", "edad", "color", "descripcion", "antecedentes", "created_at", "updated_at", "persona_id", "tipo_raza_id", "sexo", "is_active", "is_lost") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["nombre", "Rex"], ["edad", 5], ["color", "Caramelo"], ["descripcion", "Energico y jueguetón"], ["antecedentes", "Rescatado de la calle"], ["created_at", "2024-03-16 19:57:45.484265"], ["updated_at", "2024-03-16 19:57:45.484265"], ["persona_id", 2], ["tipo_raza_id", 31], ["sexo", 1], ["is_active", true], ["is_lost", false]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" IS NULL AND "perros"."persona_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Load (0.6ms)[0m  [1m[34mSELECT "personas".* FROM "personas" WHERE "personas"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTipoRaza Load (0.7ms)[0m  [1m[34mSELECT "tipo_razas".* FROM "tipo_razas" WHERE "tipo_razas"."id" = $1 LIMIT $2[0m  [["id", 31], ["LIMIT", 1]]
+  [1m[36mPerro Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" = $1 AND "perros"."persona_id" = $2 LIMIT $3[0m  [["nombre", "Firix"], ["persona_id", 2], ["LIMIT", 1]]
+  [1m[36mPerro Create (1.4ms)[0m  [1m[32mINSERT INTO "perros" ("nombre", "edad", "color", "descripcion", "antecedentes", "created_at", "updated_at", "persona_id", "tipo_raza_id", "sexo", "is_active", "is_lost") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["nombre", "Firix"], ["edad", 3], ["color", "Negro esperanza"], ["descripcion", "Es vago y duerme 10 horas"], ["antecedentes", "De la calle"], ["created_at", "2024-03-16 19:57:45.512040"], ["updated_at", "2024-03-16 19:57:45.512040"], ["persona_id", 2], ["tipo_raza_id", 31], ["sexo", 0], ["is_active", true], ["is_lost", false]]
+  [1m[36mTRANSACTION (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" IS NULL AND "perros"."persona_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Load (1.1ms)[0m  [1m[34mSELECT "personas".* FROM "personas" WHERE "personas"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTipoRaza Load (0.8ms)[0m  [1m[34mSELECT "tipo_razas".* FROM "tipo_razas" WHERE "tipo_razas"."id" = $1 LIMIT $2[0m  [["id", 24], ["LIMIT", 1]]
+  [1m[36mPerro Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" = $1 AND "perros"."persona_id" = $2 LIMIT $3[0m  [["nombre", "Haku"], ["persona_id", 3], ["LIMIT", 1]]
+  [1m[36mPerro Create (1.5ms)[0m  [1m[32mINSERT INTO "perros" ("nombre", "edad", "color", "descripcion", "antecedentes", "created_at", "updated_at", "persona_id", "tipo_raza_id", "sexo", "is_active", "is_lost") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["nombre", "Haku"], ["edad", 7], ["color", "Marron Canela"], ["descripcion", "No convive con otros perros"], ["antecedentes", "Esta castrado"], ["created_at", "2024-03-16 19:57:45.544221"], ["updated_at", "2024-03-16 19:57:45.544221"], ["persona_id", 3], ["tipo_raza_id", 24], ["sexo", 0], ["is_active", true], ["is_lost", false]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" IS NULL AND "perros"."persona_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Load (0.5ms)[0m  [1m[34mSELECT "personas".* FROM "personas" WHERE "personas"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mTipoRaza Load (0.6ms)[0m  [1m[34mSELECT "tipo_razas".* FROM "tipo_razas" WHERE "tipo_razas"."id" = $1 LIMIT $2[0m  [["id", 28], ["LIMIT", 1]]
+  [1m[36mPerro Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" = $1 AND "perros"."persona_id" = $2 LIMIT $3[0m  [["nombre", "Bachicha"], ["persona_id", 3], ["LIMIT", 1]]
+  [1m[36mPerro Create (1.0ms)[0m  [1m[32mINSERT INTO "perros" ("nombre", "edad", "color", "descripcion", "antecedentes", "created_at", "updated_at", "persona_id", "tipo_raza_id", "sexo", "is_active", "is_lost") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["nombre", "Bachicha"], ["edad", 7], ["color", "Negro y marron"], ["descripcion", "Toma solcito a la orilla del mar"], ["antecedentes", "Vacuna antirrabica"], ["created_at", "2024-03-16 19:57:45.574453"], ["updated_at", "2024-03-16 19:57:45.574453"], ["persona_id", 3], ["tipo_raza_id", 28], ["sexo", 1], ["is_active", true], ["is_lost", false]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" IS NULL AND "perros"."persona_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Load (0.4ms)[0m  [1m[34mSELECT "personas".* FROM "personas" WHERE "personas"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTipoRaza Load (0.4ms)[0m  [1m[34mSELECT "tipo_razas".* FROM "tipo_razas" WHERE "tipo_razas"."id" = $1 LIMIT $2[0m  [["id", 28], ["LIMIT", 1]]
+  [1m[36mPerro Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" = $1 AND "perros"."persona_id" = $2 LIMIT $3[0m  [["nombre", "Carbon"], ["persona_id", 4], ["LIMIT", 1]]
+  [1m[36mPerro Create (0.7ms)[0m  [1m[32mINSERT INTO "perros" ("nombre", "edad", "color", "descripcion", "antecedentes", "created_at", "updated_at", "persona_id", "tipo_raza_id", "sexo", "is_active", "is_lost") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["nombre", "Carbon"], ["edad", 6], ["color", "Negro"], ["descripcion", "Compañero"], ["antecedentes", "No tiene"], ["created_at", "2024-03-16 19:57:45.597863"], ["updated_at", "2024-03-16 19:57:45.597863"], ["persona_id", 4], ["tipo_raza_id", 28], ["sexo", 0], ["is_active", true], ["is_lost", false]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" IS NULL AND "perros"."persona_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPersona Load (0.4ms)[0m  [1m[34mSELECT "personas".* FROM "personas" WHERE "personas"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTipoRaza Load (0.4ms)[0m  [1m[34mSELECT "tipo_razas".* FROM "tipo_razas" WHERE "tipo_razas"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPerro Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "perros" WHERE "perros"."nombre" = $1 AND "perros"."persona_id" = $2 LIMIT $3[0m  [["nombre", "Fatiga"], ["persona_id", 4], ["LIMIT", 1]]
+  [1m[36mPerro Create (0.9ms)[0m  [1m[32mINSERT INTO "perros" ("nombre", "edad", "color", "descripcion", "antecedentes", "created_at", "updated_at", "persona_id", "tipo_raza_id", "sexo", "is_active", "is_lost") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["nombre", "Fatiga"], ["edad", 24], ["color", "Marron Claro"], ["descripcion", "Muy dormilon"], ["antecedentes", "No tiene"], ["created_at", "2024-03-16 19:57:45.621799"], ["updated_at", "2024-03-16 19:57:45.621799"], ["persona_id", 4], ["tipo_raza_id", 1], ["sexo", 0], ["is_active", true], ["is_lost", false]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Create (0.7ms)[0m  [1m[32mINSERT INTO "tipo_turnos" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.634323"], ["updated_at", "2024-03-16 19:57:45.634323"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Update (0.7ms)[0m  [1m[33mUPDATE "tipo_turnos" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_turnos"."id" = $3[0m  [["nombre", "Vacuna tipo A"], ["updated_at", "2024-03-16 19:57:45.642086"], ["id", 1]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_turnos" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.649548"], ["updated_at", "2024-03-16 19:57:45.649548"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Update (0.5ms)[0m  [1m[33mUPDATE "tipo_turnos" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_turnos"."id" = $3[0m  [["nombre", "Vacuna tipo B"], ["updated_at", "2024-03-16 19:57:45.656153"], ["id", 2]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_turnos" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.663106"], ["updated_at", "2024-03-16 19:57:45.663106"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Update (0.6ms)[0m  [1m[33mUPDATE "tipo_turnos" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_turnos"."id" = $3[0m  [["nombre", "Urgencia"], ["updated_at", "2024-03-16 19:57:45.669357"], ["id", 3]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_turnos" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.676807"], ["updated_at", "2024-03-16 19:57:45.676807"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Update (0.6ms)[0m  [1m[33mUPDATE "tipo_turnos" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_turnos"."id" = $3[0m  [["nombre", "Desparasitacion"], ["updated_at", "2024-03-16 19:57:45.683387"], ["id", 4]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Create (0.6ms)[0m  [1m[32mINSERT INTO "tipo_turnos" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.692685"], ["updated_at", "2024-03-16 19:57:45.692685"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Update (0.5ms)[0m  [1m[33mUPDATE "tipo_turnos" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_turnos"."id" = $3[0m  [["nombre", "Castracion"], ["updated_at", "2024-03-16 19:57:45.699875"], ["id", 5]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Create (0.5ms)[0m  [1m[32mINSERT INTO "tipo_turnos" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", nil], ["created_at", "2024-03-16 19:57:45.710051"], ["updated_at", "2024-03-16 19:57:45.710051"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTipoTurno Update (0.6ms)[0m  [1m[33mUPDATE "tipo_turnos" SET "nombre" = $1, "updated_at" = $2 WHERE "tipo_turnos"."id" = $3[0m  [["nombre", "Atencion"], ["updated_at", "2024-03-16 19:57:45.718310"], ["id", 6]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.3ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.1ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.3ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.3ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Load (0.3ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTipoTurno Load (0.5ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTurno Load (0.4ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTurno Create (2.0ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2024-03-17"], ["franja_horaria", 1], ["estado", 0], ["monto", nil], ["created_at", "2024-03-16 19:57:45.802954"], ["updated_at", "2024-03-16 19:57:45.802954"], ["perro_id", 1], ["tipo_turno_id", 6], ["dosis", nil], ["descripcion", nil], ["peso", nil], ["hora", nil]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.5ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.5ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.6ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Load (0.6ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTipoTurno Load (0.4ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTurno Load (0.4ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 4], ["perro_id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 4], ["perro_id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 4], ["perro_id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 4], ["perro_id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTurno Create (1.1ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2024-03-17"], ["franja_horaria", 0], ["estado", 0], ["monto", nil], ["created_at", "2024-03-16 19:57:45.849291"], ["updated_at", "2024-03-16 19:57:45.849291"], ["perro_id", 2], ["tipo_turno_id", 4], ["dosis", nil], ["descripcion", nil], ["peso", nil], ["hora", nil]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.5ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.7ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.6ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.1ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Load (0.5ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTipoTurno Load (0.8ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTurno Load (0.7ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 2], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 2], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 2], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 2], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTurno Create (0.9ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2024-03-16"], ["franja_horaria", 1], ["estado", 1], ["monto", nil], ["created_at", "2024-03-16 19:57:45.906845"], ["updated_at", "2024-03-16 19:57:45.906845"], ["perro_id", 1], ["tipo_turno_id", 2], ["dosis", nil], ["descripcion", nil], ["peso", nil], ["hora", "22:30:00"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.6ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.7ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.5ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Load (0.6ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTipoTurno Load (0.8ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTurno Load (1.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 2], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 2], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 2], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 2], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTurno Create (1.0ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2024-03-16"], ["franja_horaria", 0], ["estado", 1], ["monto", nil], ["created_at", "2024-03-16 19:57:45.956783"], ["updated_at", "2024-03-16 19:57:45.956783"], ["perro_id", 1], ["tipo_turno_id", 2], ["dosis", nil], ["descripcion", nil], ["peso", nil], ["hora", "14:30:00"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.8ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.8ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.6ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Load (0.6ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTipoTurno Load (1.2ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mTurno Load (0.8ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 4], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 4], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 4], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.1ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 4], ["perro_id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTurno Create (0.9ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2024-03-16"], ["franja_horaria", 0], ["estado", 1], ["monto", nil], ["created_at", "2024-03-16 19:57:46.011218"], ["updated_at", "2024-03-16 19:57:46.011218"], ["perro_id", 1], ["tipo_turno_id", 4], ["dosis", nil], ["descripcion", nil], ["peso", nil], ["hora", "14:00:00"]]
+  [1m[36mTRANSACTION (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.4ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.4ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.4ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTurno Create (0.9ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2023-11-20"], ["franja_horaria", 0], ["estado", 3], ["monto", 25000.0], ["created_at", "2024-03-16 19:57:46.038815"], ["updated_at", "2024-03-16 19:57:46.038815"], ["perro_id", 3], ["tipo_turno_id", 5], ["dosis", nil], ["descripcion", "Salio todo perfecto"], ["peso", nil], ["hora", nil]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.3ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.5ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.3ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTurno Create (0.7ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2023-11-20"], ["franja_horaria", 0], ["estado", 3], ["monto", 25000.0], ["created_at", "2024-03-16 19:57:46.065926"], ["updated_at", "2024-03-16 19:57:46.065926"], ["perro_id", 5], ["tipo_turno_id", 5], ["dosis", nil], ["descripcion", "Castracion 0 km"], ["peso", nil], ["hora", nil]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.5ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.5ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.8ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTurno Create (0.8ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2023-11-10"], ["franja_horaria", 0], ["estado", 3], ["monto", 3000.0], ["created_at", "2024-03-16 19:57:46.094179"], ["updated_at", "2024-03-16 19:57:46.094179"], ["perro_id", 3], ["tipo_turno_id", 6], ["dosis", nil], ["descripcion", "Se le cortaron las uñas"], ["peso", nil], ["hora", nil]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.3ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.3ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.4ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTurno Create (0.6ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2023-12-10"], ["franja_horaria", 0], ["estado", 3], ["monto", 30000.0], ["created_at", "2024-03-16 19:57:46.121438"], ["updated_at", "2024-03-16 19:57:46.121438"], ["perro_id", 3], ["tipo_turno_id", 6], ["dosis", nil], ["descripcion", "Placa de patita"], ["peso", nil], ["hora", nil]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mCampaniaDonacion Create (1.1ms)[0m  [1m[32mINSERT INTO "campania_donacions" ("nombre", "descripcion", "fecha_final", "monto_actual", "monto_objetivo", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["nombre", "Refugio Titucha "], ["descripcion", "El refugio Titucha que se encuentra ubicado en La Plata y necesitan ayuda monetaria para comprar Vacunas Antirábicas."], ["fecha_final", "2024-04-16 19:57:46.141484"], ["monto_actual", "0.0"], ["monto_objetivo", "20000.0"], ["created_at", "2024-03-16 19:57:46.142159"], ["updated_at", "2024-03-16 19:57:46.142159"]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTarjetaCredito Create (0.9ms)[0m  [1m[32mINSERT INTO "tarjeta_creditos" ("numero", "nombre", "fecha_vencimiento", "codigo_seguridad", "saldo", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["numero", "1111222233334444"], ["nombre", "John Doe"], ["fecha_vencimiento", "2028-06-01"], ["codigo_seguridad", 123], ["saldo", "200000.0"], ["created_at", "2024-03-16 19:57:46.174832"], ["updated_at", "2024-03-16 19:57:46.174832"]]
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPlaza Create (0.9ms)[0m  [1m[32mINSERT INTO "plazas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", "Moreno"], ["created_at", "2024-03-16 19:57:46.190766"], ["updated_at", "2024-03-16 19:57:46.190766"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPlaza Create (0.5ms)[0m  [1m[32mINSERT INTO "plazas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", "España"], ["created_at", "2024-03-16 19:57:46.198744"], ["updated_at", "2024-03-16 19:57:46.198744"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPlaza Create (0.6ms)[0m  [1m[32mINSERT INTO "plazas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", "Italia"], ["created_at", "2024-03-16 19:57:46.206822"], ["updated_at", "2024-03-16 19:57:46.206822"]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPlaza Create (0.5ms)[0m  [1m[32mINSERT INTO "plazas" ("nombre", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["nombre", "Azcuénaga"], ["created_at", "2024-03-16 19:57:46.214662"], ["updated_at", "2024-03-16 19:57:46.214662"]]
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPaseador Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "paseadors" WHERE "paseadors"."email" = $1 LIMIT $2[0m  [["email", "paseadorJuan@gmail.com"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPaseador Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "paseadors" WHERE "paseadors"."email" = $1 LIMIT $2[0m  [["email", "paseosValentina@gmail.com"], ["LIMIT", 1]]
+  [1m[36mPaseador Create (1.1ms)[0m  [1m[32mINSERT INTO "paseadors" ("name", "service_type", "email", "location", "plaza_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "Valentina Fernandez"], ["service_type", 0], ["email", "paseosValentina@gmail.com"], ["location", nil], ["plaza_id", 2], ["created_at", "2024-03-16 19:57:46.250920"], ["updated_at", "2024-03-16 19:57:46.250920"]]
+  [1m[36mTRANSACTION (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPaseador Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "paseadors" WHERE "paseadors"."email" = $1 LIMIT $2[0m  [["email", "paseadoraAnto@gmail.com"], ["LIMIT", 1]]
+  [1m[36mPaseador Create (0.7ms)[0m  [1m[32mINSERT INTO "paseadors" ("name", "service_type", "email", "location", "plaza_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "Antonella Sani"], ["service_type", 0], ["email", "paseadoraAnto@gmail.com"], ["location", nil], ["plaza_id", 3], ["created_at", "2024-03-16 19:57:46.262340"], ["updated_at", "2024-03-16 19:57:46.262340"]]
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPaseador Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "paseadors" WHERE "paseadors"."email" = $1 LIMIT $2[0m  [["email", "cuidadoraMelina@gamil.com"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPaseador Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "paseadors" WHERE "paseadors"."email" = $1 LIMIT $2[0m  [["email", "cuidadorNacho@gmail.com"], ["LIMIT", 1]]
+  [1m[36mPaseador Create (0.5ms)[0m  [1m[32mINSERT INTO "paseadors" ("name", "service_type", "email", "location", "plaza_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["name", "Nacho Cuervo"], ["service_type", 1], ["email", "cuidadorNacho@gmail.com"], ["location", "462 nro 1360"], ["plaza_id", nil], ["created_at", "2024-03-16 19:57:46.279375"], ["updated_at", "2024-03-16 19:57:46.279375"]]
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.5ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.5ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.4ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.1ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.1ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Load (0.5ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mTipoTurno Load (0.6ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTurno Load (0.6ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 5], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 5], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 5], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 5], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.5ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.9ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.4ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.1ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.1ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTurno Create (0.8ms)[0m  [1m[32mINSERT INTO "turnos" ("dia", "franja_horaria", "estado", "monto", "created_at", "updated_at", "perro_id", "tipo_turno_id", "dosis", "descripcion", "peso", "hora") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING "id"[0m  [["dia", "2023-12-20"], ["franja_horaria", 0], ["estado", 0], ["monto", nil], ["created_at", "2024-03-16 19:57:46.354888"], ["updated_at", "2024-03-16 19:57:46.354888"], ["perro_id", 5], ["tipo_turno_id", 6], ["dosis", nil], ["descripcion", nil], ["peso", nil], ["hora", nil]]
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mTurno Load (0.5ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mPerro Load (0.5ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mTipoTurno Load (0.5ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" IS NULL AND "turnos"."perro_id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mPerro Load (0.7ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTipoTurno Load (0.5ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mTurno Load (0.5ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:17:in `turno_duplicado'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:24:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:25:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:26:in `edad_minima_vacuna_tipo_a'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:33:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:34:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:35:in `edad_minima_vacuna_tipo_b'
+  [1m[36mCACHE Turno Load (0.0ms)[0m  [1m[34mSELECT "turnos".* FROM "turnos" WHERE "turnos"."tipo_turno_id" = $1 AND "turnos"."perro_id" = $2 LIMIT $3[0m  [["tipo_turno_id", 6], ["perro_id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:42:in `edad_minima_castracion'
+  [1m[36mCACHE Perro Load (0.0ms)[0m  [1m[34mSELECT "perros".* FROM "perros" WHERE "perros"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:43:in `edad_minima_castracion'
+  [1m[36mCACHE TipoTurno Load (0.0ms)[0m  [1m[34mSELECT "tipo_turnos".* FROM "tipo_turnos" WHERE "tipo_turnos"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/turno.rb:44:in `edad_minima_castracion'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[31mROLLBACK[0m
